@@ -31,10 +31,10 @@ export const ContactSection = () => {
             <Button
               size="lg"
               className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all group"
-              onClick={() => window.open("https://calendly.com/your-calendar-link", "_blank")}
+              onClick={() => window.open("https://calendly.com/ljdstechva/30min", "_blank")}
             >
               <Calendar className="mr-2 h-5 w-5" />
-              Open Booking Calendar
+              Book a 30-Minute Call
             </Button>
           </div>
 
@@ -52,11 +52,11 @@ export const ContactSection = () => {
           <div className="text-center space-y-4">
             <h4 className="text-lg font-semibold">Prefer Email?</h4>
             <a
-              href="mailto:laurenz@ljdstech.com"
+              href="mailto:ljdstechva@gmail.com"
               className="inline-flex items-center text-primary hover:text-primary/80 transition-colors group"
             >
               <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              <span className="text-lg font-medium">laurenz@ljdstech.com</span>
+              <span className="text-lg font-medium">ljdstechva@gmail.com</span>
             </a>
           </div>
         </div>
