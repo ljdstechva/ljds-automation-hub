@@ -24,11 +24,11 @@ const specialisations = [
 
 export const SpecialisationSection = () => {
   return (
-    <section id="specialisation" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+    <section id="specialization" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center space-y-4 mb-16 animate-fade-in">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-            My Specialisation
+            My Specialization
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
             Building AI-powered systems that quietly run your business in the background.

@@ -60,7 +60,7 @@ const projects = [
 export const ProjectsSection = () => {
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-7xl">
+      <div className="container mx-auto max-w-7xl px-4">
         <div className="text-center space-y-4 mb-16 animate-fade-in">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
             My Projects

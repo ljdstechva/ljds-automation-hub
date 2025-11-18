@@ -18,7 +18,7 @@ const tools = [
   },
   {
     name: "GoHighLevel",
-    logo: "https://www.gohighlevel.com/favicon.ico",
+    logo: "https://assets-global.website-files.com/5f67db4cfde8ae2e8d8c4a4d/5f7d9c7e0c77c51e7e3f8f8e_gohighlevel-logo.png",
     description: "CRM, pipelines, and marketing automation for client management.",
   },
   {
@@ -39,7 +39,7 @@ export const ToolsSection = () => {
       <div className="container mx-auto max-w-7xl">
         <div className="text-center space-y-4 mb-16 animate-fade-in">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
-            My Favourite Tools
+            My Favorite Tools
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
             The platforms I use to design, build, and maintain automations.

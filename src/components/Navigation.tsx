@@ -5,7 +5,7 @@ import logoHorizontal from "@/assets/logo-horizontal.png";
 
 const navItems = [
   { id: "home", label: "Home" },
-  { id: "specialisation", label: "Specialisation" },
+  { id: "specialization", label: "Specialization" },
   { id: "about", label: "About" },
   { id: "tools", label: "Tools" },
   { id: "projects", label: "Projects" },
