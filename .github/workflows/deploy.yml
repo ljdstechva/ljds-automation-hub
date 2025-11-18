@@ -37,6 +37,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
+          # 👇 give it a UNIQUE name
+          name: vite-pages
 
   deploy:
     needs: build
@@ -48,3 +50,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # 👇 tell deploy-pages to use that same unique artifact
+          artifact_name: vite-pages
