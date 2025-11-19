@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoHorizontal from "@/assets/logo-horizontal.png";
+import logoHorizontalLight from "@/assets/logo-horizontal-light.png";
 
 const navItems = [
   { id: "home", label: "Home" },
@@ -80,7 +81,19 @@ export const Navigation = () => {
             onClick={() => scrollToSection("home")}
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            <img src={logoHorizontal} alt="LJDS Tech" className="h-8 sm:h-10" />
+            {/* Light theme logo (dark text) */}
+  <img
+    src={logoHorizontal}
+    alt="LJDS Tech"
+    className="h-8 sm:h-10 dark:hidden"
+  />
+
+  {/* Dark theme logo (white text) */}
+  <img
+    src={logoHorizontalLight}
+    alt="LJDS Tech"
+    className="hidden h-8 sm:h-10 dark:block"
+  />
           </button>
 
           {/* Desktop Navigation */}
