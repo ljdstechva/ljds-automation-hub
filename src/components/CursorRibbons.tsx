@@ -9,6 +9,7 @@ interface RibbonsProps {
   color?: string;
   speed?: number;
   thickness?: number;
+  maxAge?: number;
   fade?: boolean;
 }
 
