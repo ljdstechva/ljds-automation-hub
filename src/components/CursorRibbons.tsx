@@ -14,7 +14,7 @@ interface RibbonsProps {
 
 export const CursorRibbons = ({ 
   color = 'hsl(16, 100%, 55%)', 
-  speed = 0.7, 
+  speed = 0.2, 
   thickness = 10,
   fade = true 
 }: RibbonsProps) => {
