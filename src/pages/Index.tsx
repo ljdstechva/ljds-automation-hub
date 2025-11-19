@@ -5,12 +5,14 @@ import { AboutSection } from "@/components/AboutSection";
 import { ToolsSection } from "@/components/ToolsSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
-import { CursorRibbons } from "@/components/CursorRibbons";
+import { CursorRibbons } from "@/components/Ribbons";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <CursorRibbons color="hsl(16, 100%, 55%)" speed={0.7} thickness={10} maxAge={250} fade={true} />
+
+      <CursorRibbons color="hsl(16, 100%, 55%)" speed={0.7} thickness={10} fade={true} />
+
       <Navigation />
       <main>
         <HeroSection />
@@ -19,7 +21,10 @@ const Index = () => {
         <ToolsSection />
         <ProjectsSection />
         <ContactSection />
+        
       </main>
+
+      
       
       {/* Footer */}
       <footer className="py-8 px-4 text-center text-sm text-muted-foreground border-t border-border">
