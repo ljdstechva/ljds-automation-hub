@@ -14,8 +14,9 @@ interface RibbonsProps {
 
 export const CursorRibbons = ({ 
   color = 'hsl(16, 100%, 55%)', 
-  speed = 0.2, 
+  speed = 0.7, 
   thickness = 10,
+  maxAge = 400,
   fade = true 
 }: RibbonsProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
