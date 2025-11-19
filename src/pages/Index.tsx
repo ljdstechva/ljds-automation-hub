@@ -10,7 +10,7 @@ import { CursorRibbons } from "@/components/CursorRibbons";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <CursorRibbons color="hsl(16, 100%, 55%)" speed={0.7} thickness={10} fade={true} />
+      <CursorRibbons color="hsl(16, 100%, 55%)" speed={0.7} thickness={10} maxAge={250} fade={true} />
       <Navigation />
       <main>
         <HeroSection />

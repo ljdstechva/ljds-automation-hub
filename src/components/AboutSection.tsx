@@ -26,12 +26,22 @@ export const AboutSection = () => {
           {/* Content */}
           <div className="space-y-6 text-base sm:text-lg leading-relaxed text-muted-foreground animate-fade-in-up">
             <p>
-              I'm a <span className="font-semibold text-foreground">Chemical Engineer</span> turned <span className="font-semibold text-foreground">AI Automation Specialist</span>. I help creators, agencies, and small teams replace manual busywork with simple, reliable workflows.
+              I'm a licensed <span className="font-semibold text-foreground">Chemical Engineer</span> with over a decade of experience in labs, QA/QC, and environmental consulting. I spent years optimizing complex processes, analyzing data, and solving problems under pressure.
             </p>
 
             <p>
-              I still think like an engineer: map the process, test the system, and measure the results. That means your automations are clear, documented, and built to last.
+              Now, I use that same engineering mindset to design and build <span className="font-semibold text-foreground">AI automation systems</span> that turn messy, manual workflows into reliable, scalable solutions. I help creators, agencies, and small teams replace busywork with simple workflows that just work.
             </p>
+
+            <div className="pt-4">
+              <p className="font-semibold text-foreground mb-3">What I bring to every project:</p>
+              <ul className="space-y-2 list-disc list-inside">
+                <li><span className="font-medium">Systems thinking</span> – I see how each part connects</li>
+                <li><span className="font-medium">Process optimization</span> – I find the bottlenecks and fix them</li>
+                <li><span className="font-medium">Data-driven decisions</span> – I test, measure, and iterate</li>
+                <li><span className="font-medium">Risk awareness</span> – I build for reliability, not just speed</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
