@@ -9,7 +9,7 @@ const projects = [
     costSaved: "Lower editing costs by reducing manual work",
     tools: "n8n + OpenAI + Google Drive",
     videoUrl: "https://drive.google.com/open?id=1drn87X4FwUxHLmwVgXXCI-vWUu1iwjsg&usp=drive_fs",
-    previewImage: "https://drive.google.com/uc?export=view&id=1emMtqy_GVI0HbkzSgS4b49u2I39UR0Be",
+    previewImage: "https://drive.google.com/thumbnail?id=1emMtqy_GVI0HbkzSgS4b49u2I39UR0Be&sz=w1000",
     detailedDescription: [
       "Automatically detects new audio/video files uploaded to a designated folder",
       "Transcribes the content using OpenAI Whisper for accurate speech-to-text",
@@ -27,7 +27,7 @@ const projects = [
     costSaved: "Faster response time improves client satisfaction",
     tools: "n8n + Gmail API + Telegram Bot",
     videoUrl: "https://drive.google.com/open?id=1j5VmQKFfcTyHUCIe-EaAc0foV8l0ZwVu&usp=drive_fs",
-    previewImage: "https://drive.google.com/uc?export=view&id=11Qq__rGfS8YqEwQwu_5X8mfR6bXyU0GU",
+    previewImage: "https://drive.google.com/thumbnail?id=11Qq__rGfS8YqEwQwu_5X8mfR6bXyU0GU&sz=w1000",
     detailedDescription: [
       "Monitors specific Gmail labels or sender addresses for new messages",
       "Extracts subject, sender, and message preview automatically",
@@ -45,7 +45,7 @@ const projects = [
     costSaved: "Reduced manual resizing work for designers and writers",
     tools: "n8n + Google Docs API + Image Processing",
     videoUrl: "https://drive.google.com/open?id=1B5fb6FmwQuq1sTOL9Ha2otvy4PL_AtMy&usp=drive_fs",
-    previewImage: "https://drive.google.com/uc?export=view&id=1oaCEOATy4ZngTmraOTeRRRI-9talFdgc",
+    previewImage: "https://drive.google.com/thumbnail?id=1oaCEOATy4ZngTmraOTeRRRI-9talFdgc&sz=w1000",
     detailedDescription: [
       "Scans Google Docs for embedded images automatically",
       "Downloads and processes each image to standard dimensions",
