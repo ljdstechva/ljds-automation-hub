@@ -13,7 +13,7 @@ interface RibbonsProps {
   fade?: boolean;
 }
 
-export const CursorRibbons = ({ 
+export const Ribbons = ({ 
   color = 'hsl(16, 100%, 55%)', 
   speed = 0.7, 
   thickness = 10,
