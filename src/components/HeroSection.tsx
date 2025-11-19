@@ -29,11 +29,10 @@ export const HeroSection = () => {
           <div className="space-y-8 animate-fade-in-up">
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                Hi, I'm{" "}
-                <span className="text-primary">Laurenz Julian</span>.
+                Hi, I'm <span className="text-primary">Laurenz Julian</span>.
               </h1>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-foreground/90">
-                AI Automation Specialist for busy teams.
+                AI Automation Specialist
               </h2>
             </div>
 

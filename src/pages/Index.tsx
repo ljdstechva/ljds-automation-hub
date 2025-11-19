@@ -5,10 +5,12 @@ import { AboutSection } from "@/components/AboutSection";
 import { ToolsSection } from "@/components/ToolsSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
+import { CursorRibbons } from "@/components/CursorRibbons";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <CursorRibbons color="hsl(16, 100%, 55%)" speed={0.7} thickness={10} fade={true} />
       <Navigation />
       <main>
         <HeroSection />

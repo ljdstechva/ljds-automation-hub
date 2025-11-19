@@ -18,7 +18,7 @@ const tools = [
   },
   {
     name: "GoHighLevel",
-    logo: "https://assets-global.website-files.com/5f67db4cfde8ae2e8d8c4a4d/5f7d9c7e0c77c51e7e3f8f8e_gohighlevel-logo.png",
+    logo: "https://www.gohighlevel.com/hs-fs/hubfs/logo-gohighlevel.png?width=300&height=60&name=logo-gohighlevel.png",
     description: "CRM, pipelines, and marketing automation for client management.",
   },
   {
