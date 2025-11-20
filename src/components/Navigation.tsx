@@ -132,7 +132,11 @@ export const Navigation = () => {
                 }`}
               >
                 {item.label}
+<<<<<<< HEAD
               </button>
+=======
+                </button>
+>>>>>>> 18031f1 (Animation for navigation bar, Tags for Projects, additional cards, automatic tags for tools.)
             ))}
             {/* Animated underline */}
             <span
