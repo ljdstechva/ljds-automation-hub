@@ -18,6 +18,7 @@ export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
 
   useEffect(() => {
     // Load theme preference
@@ -48,6 +49,27 @@ export const Navigation = () => {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Update underline position when active section changes
+  useEffect(() => {
+    const updateUnderlinePosition = () => {
+      const activeButton = document.querySelector(`[data-nav-id="${activeSection}"]`);
+      if (activeButton) {
+        const rect = activeButton.getBoundingClientRect();
+        const navRect = activeButton.parentElement?.getBoundingClientRect();
+        if (navRect) {
+          setUnderlineStyle({
+            left: rect.left - navRect.left,
+            width: rect.width,
+          });
+        }
+      }
+    };
+
+    updateUnderlinePosition();
+    window.addEventListener("resize", updateUnderlinePosition);
+    return () => window.removeEventListener("resize", updateUnderlinePosition);
+  }, [activeSection]);
 
   const toggleTheme = () => {
     const newTheme = !isDark;
@@ -97,10 +119,11 @@ export const Navigation = () => {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-1 relative">
             {navItems.map((item) => (
               <button
                 key={item.id}
+                data-nav-id={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`relative px-4 py-2 text-sm font-medium transition-colors ${
                   activeSection === item.id
@@ -109,11 +132,16 @@ export const Navigation = () => {
                 }`}
               >
                 {item.label}
-                {activeSection === item.id && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full transition-all" />
-                )}
               </button>
             ))}
+            {/* Animated underline */}
+            <span
+              className="absolute bottom-0 h-0.5 bg-primary rounded-full transition-all duration-300 ease-out"
+              style={{
+                left: `${underlineStyle.left}px`,
+                width: `${underlineStyle.width}px`,
+              }}
+            />
           </div>
 
           {/* Theme Toggle & Mobile Menu Button */}

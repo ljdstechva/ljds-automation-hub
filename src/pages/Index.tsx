@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/HeroSection";
 import { SpecialisationSection } from "@/components/SpecialisationSection";
@@ -5,21 +6,37 @@ import { AboutSection } from "@/components/AboutSection";
 import { ToolsSection } from "@/components/ToolsSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactSection } from "@/components/ContactSection";
-import { Ribbons } from "@/components/Ribbons";
+import { CursorRibbons } from "@/components/CursorRibbons";
 
 const Index = () => {
+  const [selectedTag, setSelectedTag] = useState("All");
+  const projectsSectionRef = useRef<HTMLElement>(null);
+
+  const handleToolClick = (filterTag: string) => {
+    setSelectedTag(filterTag);
+    // Scroll to projects section with offset for fixed nav
+    if (projectsSectionRef.current) {
+      const offset = 80;
+      const elementPosition = projectsSectionRef.current.offsetTop - offset;
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
-
-      <Ribbons color="hsl(16, 100%, 55%)" speed={0.7} thickness={10} fade={true} />
+      <CursorRibbons color="hsl(16, 100%, 55%)" speed={0.7} thickness={10} fade={true} maxAge={250} />
 
       <Navigation />
       <main>
         <HeroSection />
         <SpecialisationSection />
         <AboutSection />
-        <ToolsSection />
-        <ProjectsSection />
+        <ToolsSection onToolClick={handleToolClick} />
+        <ProjectsSection 
+          ref={projectsSectionRef}
+          selectedTag={selectedTag}
+          onTagChange={setSelectedTag}
+        />
         <ContactSection />
         
       </main>
