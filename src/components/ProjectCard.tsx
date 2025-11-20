@@ -15,10 +15,11 @@ interface ProjectCardProps {
   description: string;
   timeSaved: string;
   costSaved: string;
-  tools: string;
+  tags: string[];
   videoUrl: string;
   previewImage: string;
   detailedDescription: string[];
+  isPlaceholder?: boolean;
 }
 
 export const ProjectCard = ({
@@ -26,12 +27,35 @@ export const ProjectCard = ({
   description,
   timeSaved,
   costSaved,
-  tools,
+  tags,
   videoUrl,
   previewImage,
   detailedDescription,
+  isPlaceholder = false,
 }: ProjectCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Placeholder card for "Coming Soon"
+  if (isPlaceholder) {
+    return (
+      <Card className="p-6 bg-card border-border border-dashed h-full flex flex-col items-center justify-center opacity-60">
+        <h3 className="text-xl font-bold mb-3 text-center">Coming Soon</h3>
+        <p className="text-sm text-muted-foreground text-center">
+          New automation projects will be added here.
+        </p>
+        {/* TODO: Replace this placeholder "Coming Soon" card with a real project.
+            - Title
+            - Description
+            - Tags: string[] (e.g., ['n8n', 'OpenAI'])
+            - timeSaved: string
+            - costSaved: string
+            - videoUrl: string
+            - previewImage: string
+            - detailedDescription: string[]
+        */}
+      </Card>
+    );
+  }
 
   // Extract Google Drive file ID from the URL
   const getEmbedUrl = (url: string) => {
@@ -84,10 +108,14 @@ export const ProjectCard = ({
               </div>
             </div>
 
-            {/* Tools Badge */}
-            <Badge variant="secondary" className="w-fit text-xs">
-              {tools}
-            </Badge>
+            {/* Tech Tags */}
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <Badge key={tag} variant="secondary" className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
           </div>
         </div>
       </Card>

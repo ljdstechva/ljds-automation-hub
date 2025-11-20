@@ -1,5 +1,9 @@
 import { Card } from "@/components/ui/card";
 
+interface ToolsSectionProps {
+  onToolClick: (tool: string) => void;
+}
+
 const tools = [
   {
     name: "n8n",
@@ -33,7 +37,21 @@ const tools = [
   },
 ];
 
-export const ToolsSection = () => {
+export const ToolsSection = ({ onToolClick }: ToolsSectionProps) => {
+  // Map tool names to project filter tags
+  const toolToFilterMap: Record<string, string> = {
+    "n8n": "n8n",
+    "OpenAI": "OpenAI",
+    "Zapier": "All", // No projects yet
+    "Make": "All", // No projects yet
+    "GoHighLevel": "All", // No projects yet
+    "Prompt Engineering": "All", // No projects yet
+  };
+
+  const handleToolClick = (toolName: string) => {
+    const filterTag = toolToFilterMap[toolName] || "All";
+    onToolClick(filterTag);
+  };
   return (
     <section id="tools" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="container mx-auto max-w-7xl">
@@ -52,6 +70,7 @@ export const ToolsSection = () => {
               key={tool.name}
               className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card border-border animate-fade-in-up group cursor-pointer"
               style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={() => handleToolClick(tool.name)}
             >
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
