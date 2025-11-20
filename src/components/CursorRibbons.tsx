@@ -1,36 +1,35 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 interface Point {
   x: number;
   y: number;
-  age: number;
 }
 
 interface RibbonsProps {
   color?: string;
   speed?: number;
   thickness?: number;
-  fade?: boolean;
   maxAge?: number;
+  fade?: boolean;
 }
 
-export const CursorRibbons = ({
-  color = "hsl(16, 100%, 55%)",
-  speed = 0.5,
-  thickness = 8,
-  fade = true,
-  maxAge = 1000,
+export const CursorRibbons = ({ 
+  color = 'hsl(16, 100%, 55%)', 
+  speed = 0.7, 
+  thickness = 10,
+  maxAge = 400,
+  fade = true 
 }: RibbonsProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointsRef = useRef<Point[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const lastTimeRef = useRef(Date.now());
+  const mousePos = useRef<Point>({ x: 0, y: 0 });
+  const points = useRef<Point[]>([]);
+  const animationFrameId = useRef<number>();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     // Set canvas size
@@ -39,91 +38,93 @@ export const CursorRibbons = ({
       canvas.height = window.innerHeight;
     };
     resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener('resize', resizeCanvas);
 
-    // Track mouse movement
+    // Initialize points
+    const pointCount = 15;
+    for (let i = 0; i < pointCount; i++) {
+      points.current.push({ x: 0, y: 0 });
+    }
+
+    // Mouse move handler
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-      
-      // Add new point
-      const now = Date.now();
-      const dt = now - lastTimeRef.current;
-      lastTimeRef.current = now;
-
-      if (dt > 16) { // Throttle to ~60fps
-        pointsRef.current.push({
-          x: e.clientX,
-          y: e.clientY,
-          age: 0,
-        });
-      }
+      mousePos.current = { x: e.clientX, y: e.clientY };
     };
-
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove);
 
     // Animation loop
-    let animationFrameId: number;
-    
     const animate = () => {
-      if (!ctx || !canvas) return;
-
-      // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update and draw points
-      const points = pointsRef.current;
-      
-      // Age and filter points
-      pointsRef.current = points
-        .map(p => ({ ...p, age: p.age + speed * 16 }))
-        .filter(p => p.age < maxAge);
-
-      // Draw ribbons
-      if (pointsRef.current.length > 1) {
-        ctx.lineWidth = thickness;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-
-        for (let i = 0; i < pointsRef.current.length - 1; i++) {
-          const p1 = pointsRef.current[i];
-          const p2 = pointsRef.current[i + 1];
-
-          // Calculate opacity based on age if fade is enabled
-          let opacity = 1;
-          if (fade) {
-            opacity = 1 - p1.age / maxAge;
-          }
-
-          // Parse HSL color and add opacity
-          const colorWithOpacity = color.includes("hsl")
-            ? color.replace(")", `, ${opacity})`)
-            : `rgba(255, 255, 255, ${opacity})`;
-
-          ctx.strokeStyle = colorWithOpacity;
-          ctx.beginPath();
-          ctx.moveTo(p1.x, p1.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.stroke();
+      // Update points
+      for (let i = points.current.length - 1; i >= 0; i--) {
+        if (i === 0) {
+          // Head follows mouse with spring physics
+          const dx = mousePos.current.x - points.current[i].x;
+          const dy = mousePos.current.y - points.current[i].y;
+          points.current[i].x += dx * (0.5 * speed);
+          points.current[i].y += dy * (0.5 * speed);
+        } else {
+          // Other points follow previous point
+          const prev = points.current[i - 1];
+          const curr = points.current[i];
+          curr.x += (prev.x - curr.x) * (0.1 + speed * 0.7);
+          curr.y += (prev.y - curr.y) * (0.1 + speed * 0.7);
         }
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      // Draw ribbon
+      if (points.current.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(points.current[0].x, points.current[0].y);
+
+        for (let i = 1; i < points.current.length; i++) {
+          ctx.lineTo(points.current[i].x, points.current[i].y);
+        }
+
+        // Apply gradient if fade is enabled
+        if (fade) {
+          const gradient = ctx.createLinearGradient(
+            points.current[0].x,
+            points.current[0].y,
+            points.current[points.current.length - 1].x,
+            points.current[points.current.length - 1].y
+          );
+          
+          // Parse HSL color and create gradient
+          gradient.addColorStop(0, color);
+          gradient.addColorStop(1, color.replace(')', ', 0)').replace('hsl', 'hsla'));
+          ctx.strokeStyle = gradient;
+        } else {
+          ctx.strokeStyle = color;
+        }
+
+        ctx.lineWidth = thickness;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+      }
+
+      animationFrameId.current = requestAnimationFrame(animate);
     };
 
     animate();
 
+    // Cleanup
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
     };
   }, [color, speed, thickness, fade, maxAge]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[9999]"
-      style={{ mixBlendMode: "screen" }}
+      className="fixed inset-0 pointer-events-none z-50"
+      style={{ pointerEvents: 'none' }}
     />
   );
 };
