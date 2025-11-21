@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar } from "lucide-react";
 import emojiFace from "@/assets/emoji-face.png";
-import { FloatingLines } from "@/components/FloatingLines";
 
 
 
@@ -18,18 +17,10 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-visible mb-16 rounded-b-[60px] bg-gradient-to-b from-background to-background/95"
-      style={{
-        boxShadow: '0 30px 60px -20px rgba(255, 95, 31, 0.15), 0 50px 100px -30px rgba(0, 0, 0, 0.1)'
-      }}
+      className="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
     >
-      {/* Floating Lines Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-b-[60px]">
-        <FloatingLines />
-      </div>
-
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden rounded-b-[60px]">
+      <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-glow-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-glow-pulse" style={{ animationDelay: "1s" }} />
       </div>
