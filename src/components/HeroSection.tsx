@@ -17,8 +17,32 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden rounded-b-[80px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)]"
     >
+      {/* Floating Lines Background */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <svg className="w-full h-full opacity-20" style={{ filter: 'blur(1px)' }}>
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'hsl(16, 100%, 55%)', stopOpacity: 0.6 }} />
+              <stop offset="100%" style={{ stopColor: 'hsl(16, 100%, 55%)', stopOpacity: 0.1 }} />
+            </linearGradient>
+          </defs>
+          <g className="animate-float">
+            <line x1="10%" y1="20%" x2="30%" y2="80%" stroke="url(#lineGradient)" strokeWidth="2" />
+            <line x1="25%" y1="10%" x2="45%" y2="90%" stroke="url(#lineGradient)" strokeWidth="1.5" />
+          </g>
+          <g className="animate-float" style={{ animationDelay: '1s', animationDuration: '25s' }}>
+            <line x1="55%" y1="15%" x2="75%" y2="85%" stroke="url(#lineGradient)" strokeWidth="2" />
+            <line x1="70%" y1="25%" x2="90%" y2="75%" stroke="url(#lineGradient)" strokeWidth="1.5" />
+          </g>
+          <g className="animate-float" style={{ animationDelay: '2s', animationDuration: '22s' }}>
+            <line x1="40%" y1="30%" x2="60%" y2="70%" stroke="url(#lineGradient)" strokeWidth="1" />
+            <line x1="80%" y1="10%" x2="95%" y2="50%" stroke="url(#lineGradient)" strokeWidth="1.5" />
+          </g>
+        </svg>
+      </div>
+
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-glow-pulse" />
