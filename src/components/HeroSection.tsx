@@ -17,34 +17,41 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden rounded-b-[80px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)]"
+      className="min-h-screen flex items-center justify-center pt-20 px-4 sm:px-6 lg:px-8 relative overflow-visible mb-16 rounded-b-[60px] bg-gradient-to-b from-background to-background/95"
+      style={{
+        boxShadow: '0 30px 60px -20px rgba(255, 95, 31, 0.15), 0 50px 100px -30px rgba(0, 0, 0, 0.1)'
+      }}
     >
       {/* Floating Lines Background */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <svg className="w-full h-full opacity-20" style={{ filter: 'blur(1px)' }}>
+      <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-b-[60px]">
+        <svg className="w-full h-full opacity-30">
           <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: 'hsl(16, 100%, 55%)', stopOpacity: 0.6 }} />
+            <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'hsl(16, 100%, 55%)', stopOpacity: 0.8 }} />
+              <stop offset="100%" style={{ stopColor: 'hsl(16, 100%, 55%)', stopOpacity: 0.2 }} />
+            </linearGradient>
+            <linearGradient id="lineGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style={{ stopColor: 'hsl(16, 100%, 65%)', stopOpacity: 0.6 }} />
               <stop offset="100%" style={{ stopColor: 'hsl(16, 100%, 55%)', stopOpacity: 0.1 }} />
             </linearGradient>
           </defs>
-          <g className="animate-float">
-            <line x1="10%" y1="20%" x2="30%" y2="80%" stroke="url(#lineGradient)" strokeWidth="2" />
-            <line x1="25%" y1="10%" x2="45%" y2="90%" stroke="url(#lineGradient)" strokeWidth="1.5" />
+          <g className="animate-float" style={{ transformOrigin: 'center' }}>
+            <line x1="5%" y1="10%" x2="25%" y2="90%" stroke="url(#lineGradient1)" strokeWidth="3" strokeLinecap="round" />
+            <line x1="20%" y1="5%" x2="40%" y2="95%" stroke="url(#lineGradient1)" strokeWidth="2" strokeLinecap="round" />
           </g>
-          <g className="animate-float" style={{ animationDelay: '1s', animationDuration: '25s' }}>
-            <line x1="55%" y1="15%" x2="75%" y2="85%" stroke="url(#lineGradient)" strokeWidth="2" />
-            <line x1="70%" y1="25%" x2="90%" y2="75%" stroke="url(#lineGradient)" strokeWidth="1.5" />
+          <g className="animate-float" style={{ animationDelay: '1.5s', animationDuration: '28s', transformOrigin: 'center' }}>
+            <line x1="60%" y1="8%" x2="80%" y2="92%" stroke="url(#lineGradient2)" strokeWidth="3" strokeLinecap="round" />
+            <line x1="75%" y1="15%" x2="95%" y2="85%" stroke="url(#lineGradient2)" strokeWidth="2" strokeLinecap="round" />
           </g>
-          <g className="animate-float" style={{ animationDelay: '2s', animationDuration: '22s' }}>
-            <line x1="40%" y1="30%" x2="60%" y2="70%" stroke="url(#lineGradient)" strokeWidth="1" />
-            <line x1="80%" y1="10%" x2="95%" y2="50%" stroke="url(#lineGradient)" strokeWidth="1.5" />
+          <g className="animate-float" style={{ animationDelay: '3s', animationDuration: '32s', transformOrigin: 'center' }}>
+            <line x1="35%" y1="20%" x2="45%" y2="80%" stroke="url(#lineGradient1)" strokeWidth="2.5" strokeLinecap="round" />
+            <line x1="50%" y1="12%" x2="65%" y2="88%" stroke="url(#lineGradient2)" strokeWidth="2" strokeLinecap="round" />
           </g>
         </svg>
       </div>
 
       {/* Animated background elements */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 overflow-hidden rounded-b-[60px]">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-glow-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-glow-pulse" style={{ animationDelay: "1s" }} />
       </div>
