@@ -11,7 +11,7 @@ const projects = [
       "Automation that takes long-form audio or video, transcribes it, summarizes it, and turns it into a structured blog post or article.",
     timeSaved: "2-3 hours per content piece",
     costSaved: "Lower editing costs by reducing manual work",
-    tags: ["n8n", "OpenAI", "Google Drive"],
+    tags: ["n8n", "OpenAI", "Google Drive", "API"],
     videoUrl: "https://drive.google.com/open?id=1drn87X4FwUxHLmwVgXXCI-vWUu1iwjsg&usp=drive_fs",
     previewImage: "https://i.imgur.com/rkJHsaK.png",
     detailedDescription: [
@@ -47,7 +47,7 @@ const projects = [
     "Automation that collects social media images from Google Drive, transfers them into Google Docs, and automatically resizes each image while preparing a clean caption space below.",
   timeSaved: "20–40 minutes per batch of images",
   costSaved: "Removes repetitive manual formatting for content creators",
-  tags: ["n8n", "Google Drive", "Google Docs"],
+  tags: ["n8n", "Google Drive", "Google Docs", "API"],
   videoUrl: "https://drive.google.com/open?id=1B5fb6FmwQuq1sTOL9Ha2otvy4PL_AtMy&usp=drive_fs",
   previewImage: "https://i.imgur.com/21UjtPV.png",
   detailedDescription: [
@@ -66,7 +66,7 @@ const projects = [
     "A fully automated voice-driven appointment scheduling system where an AI agent handles incoming calls, checks availability, books appointments, updates or cancels slots, and logs all details into Airtable—without human intervention.",
   timeSaved: "2–4 hours per day of manual call handling",
   costSaved: "Eliminates the need for a dedicated appointment setter",
-  tags: ["n8n", "VAPI", "Google Calendar", "Airtable", "Voice AI"],
+  tags: ["n8n", "VAPI", "Google Calendar", "Airtable", "Voice AI", "Webhook"],
   videoUrl: "https://drive.google.com/open?id=1CTJ_RDmsjU8xFrPzmdpwOwswB9qkyke-&usp=drive_fs",
   previewImage: "https://i.imgur.com/FIcyl4n.png",
   detailedDescription: [
@@ -82,7 +82,7 @@ const projects = [
 }
 ];
 
-const filterTags = ["All", "n8n", "OpenAI", "Google Drive", "Gmail", "Telegram", "Google Docs", "API"];
+const filterTags = ["All", "n8n", "OpenAI", "Google Drive", "Gmail", "Telegram", "Google Docs", "API", "Webhook"];
 
 interface ProjectsSectionProps {
   selectedTag: string;
