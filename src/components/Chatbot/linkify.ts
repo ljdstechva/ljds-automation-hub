@@ -18,15 +18,13 @@ export function linkifyText(text: string): string {
   // Match any http/https URL (allow dots, slashes, etc.)
   const urlRegex = /(https?:\/\/[^\s]+)/g;
 
-  return safe.replace(urlRegex, (url) => {
-    // Split into "clean URL" + trailing punctuation (if any)
-    // e.g. "https://calendly.com/ljdstechva/30min." ->
-    //   cleanUrl = "https://calendly.com/ljdstechva/30min"
-    //   trailing = "."
+  return safe
+  .replace(urlRegex, url => {
     const match = url.match(/^(.*?)([.,!?)]*)$/);
     const cleanUrl = match ? match[1] : url;
     const trailing = match ? match[2] : '';
-
     return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">${cleanUrl}</a>${trailing}`;
-  });
+  })
+  .replace(/\n/g, "<br>");
+
 }
