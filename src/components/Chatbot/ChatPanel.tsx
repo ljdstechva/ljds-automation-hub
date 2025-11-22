@@ -4,6 +4,7 @@ import { X, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { linkifyText } from './linkify'; 
 
 interface ChatPanelProps {
   messages: Message[];
@@ -23,15 +24,15 @@ export const ChatPanel = ({
   onTyping 
 }: ChatPanelProps) => {
   const [input, setInput] = useState('');
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
    const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+  if (messagesEndRef.current) {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
+}, [messages, isThinking]);
 
   // Click outside to close
   useEffect(() => {
@@ -77,37 +78,46 @@ export const ChatPanel = ({
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-        <div className="space-y-4">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                  message.role === 'user'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-foreground'
-                }`}
-              >
-                <p className="text-sm">{message.content}</p>
-              </div>
-            </div>
-          ))}
-          {isThinking && (
-            <div className="flex justify-start">
-              <div className="bg-muted text-foreground rounded-lg px-4 py-2">
-                <div className="flex space-x-2">
-                  <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                </div>
-              </div>
-            </div>
-          )}
+      <ScrollArea className="flex-1 p-4">
+  <div className="space-y-4">
+    {messages.map((message) => (
+      <div
+        key={message.id}
+        className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+      >
+        <div
+          className={`max-w-[80%] rounded-lg px-4 py-2 ${
+            message.role === 'user'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-muted text-foreground'
+          }`}
+        >
+          <p
+  className="text-sm"
+  dangerouslySetInnerHTML={{ __html: linkifyText(message.content) }}
+/>
+
         </div>
-      </ScrollArea>
+      </div>
+    ))}
+
+    {isThinking && (
+      <div className="flex justify-start">
+        <div className="bg-muted text-foreground rounded-lg px-4 py-2">
+          <div className="flex space-x-2">
+            <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+            <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+            <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* 👇 This invisible div is the scroll target */}
+    <div ref={messagesEndRef} />
+  </div>
+</ScrollArea>
+
 
       {/* Input */}
       <form onSubmit={handleSubmit} className="p-4 border-t border-border">
