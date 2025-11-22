@@ -58,8 +58,7 @@ const projects = [
     "Ensures every image is uniformly positioned across the entire document",
     "Prepares the final Google Docs file for content review, editing, or publishing",
   ],
-}
-,
+},
   {
   title: "AI Appointment Setter – Smart Voice Scheduling System",
   description:
@@ -79,10 +78,52 @@ const projects = [
     "Tracks call results and stores conversation details for audit and reporting",
     "Built with modular n8n workflows to handle Get Slots, Book Slot, Update Slot, Cancel Slot, and Call Results",
   ],
+},
+{
+  title: "Facebook Page AI Chatbot",
+  description:
+    "AI chatbot that handles Facebook Page inquiries end-to-end — classifying intent, pulling the right company info, and sending human-like replies back to Messenger in real time.",
+  timeSaved: "5–10+ hours per week of manual inbox replying",
+  costSaved: "Reduces need for a dedicated VA to monitor and triage page messages",
+  tags: ["n8n", "Facebook", "OpenAI", "Google Gemini", "Webhook"],
+  videoUrl: "https://drive.google.com/open?id=14wIOpufyp37FPSUgmaMssim6CHvpxjo6&usp=drive_fs",
+  previewImage: "https://i.imgur.com/4rwHtcD.png",
+  detailedDescription: [
+    "Receives all incoming Facebook Page messages via webhook and extracts the sender’s text",
+    "Skips empty or system messages to avoid unnecessary AI calls and costs",
+    "Uses a Google Gemini chat model plus a Structured Output Parser to classify if the message is related to services or just general conversation",
+    "For service-related messages, fetches LJDS Tech VA service documentation and injects it as context for the AI Agent",
+    "For non-service or casual inquiries, uses a separate prompt and knowledge set to keep replies friendly but on-brand",
+    "Routes both branches through an OpenAI-powered agent with simple memory for more coherent multi-turn conversations",
+    "Formats the final AI response and sends it back to the user via the Facebook Graph API reply endpoint",
+    "Keeps the Facebook inbox responsive 24/7 while preserving your tone and service details"
+  ],
+},
+{
+  title: "Portfolio Website AI Chatbot",
+  description:
+    "Embedded AI assistant for my portfolio site that answers questions about my services, background, and projects using live documentation as its knowledge base.",
+  timeSaved: "Removes the need to manually answer repetitive portfolio inquiries",
+  costSaved: "Acts as a self-service pre-sales assistant for visitors and leads",
+  tags: ["n8n", "Web", "OpenAI", "Google Gemini", "Webhook"],
+  videoUrl: "https://drive.google.com/open?id=1MO8wARtQ8yVAc7Z0INjt26Lisw7m0at0&usp=drive_fs",
+  previewImage: "https://i.imgur.com/VB2DB8d.png",
+  detailedDescription: [
+    "Captures chat messages from the portfolio website via webhook and normalizes the payload",
+    "Checks that a message exists and that the source is the portfolio widget before continuing",
+    "Uses a Google Gemini chat model with a Structured Output Parser to decide if the question is related to services/portfolio or general queries",
+    "For service-related questions, pulls detailed LJDS Portfolio Information from Google Docs and maps it into the AI Agent’s prompt fields",
+    "For non-service questions, uses an alternate prompt and document set so the chatbot can still respond helpfully without going off-brand",
+    "Passes both branches into dedicated OpenAI-based ‘LJDS Chatbot’ agents, each with lightweight memory for better multi-turn conversations",
+    "Returns the structured AI response to the website through a webhook, ready to be rendered in the front-end chat UI",
+    "Gives visitors an always-on, context-aware assistant that can explain my offers, tools, and case studies in natural language"
+  ],
 }
+
+
 ];
 
-const filterTags = ["All", "n8n", "OpenAI", "Google Drive", "Gmail", "Telegram", "Google Docs", "API", "Webhook"];
+const filterTags = ["All", "n8n", "OpenAI", "Google Drive", "Gmail", "Telegram", "Google Docs", "Facebook", "Web", "API", "Webhook"];
 
 interface ProjectsSectionProps {
   selectedTag: string;
