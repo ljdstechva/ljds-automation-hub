@@ -12,7 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 // 3. Set the webhook to accept POST requests
 // 4. Copy the webhook URL (e.g., https://your-n8n-instance.app.n8n.cloud/webhook/ljds-chatbot)
 // 5. Replace the URL below with your actual webhook URL
-const DEFAULT_WEBHOOK_URL = 'https://n8n.srv1084037.hstgr.cloud/webhook-test/701eda06-a840-4157-a96a-932fd7b9c129';
+const DEFAULT_WEBHOOK_URL = 'https://n8n.srv1084037.hstgr.cloud/webhook/701eda06-a840-4157-a96a-932fd7b9c129';
 
 const DEFAULT_CONFIG: ChatbotConfig = {
   webhookUrl: DEFAULT_WEBHOOK_URL,
