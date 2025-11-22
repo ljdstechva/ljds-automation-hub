@@ -21,6 +21,8 @@ const DEFAULT_CONFIG: ChatbotConfig = {
 
 const INTRO_MESSAGE = "Hi, I'm Laurenz' bot. How may I help you today?";
 
+
+
 export const ChatbotWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -31,6 +33,19 @@ export const ChatbotWidget = () => {
   const inactivityTimer = useRef<NodeJS.Timeout>();
   const talkingTimer = useRef<NodeJS.Timeout>();
   const { toast } = useToast();
+  const [isClosing, setIsClosing] = useState(false);
+
+    const closeChat = () => {
+    setIsClosing(true);
+    setBotState('idle');
+
+    // match the duration of your CSS animation (e.g. 200ms)
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 200);
+  };
+
 
   // Wave animation every 10 seconds of inactivity
   useEffect(() => {
@@ -68,18 +83,18 @@ export const ChatbotWidget = () => {
     }
   };
 
-  const handleBotClick = () => {
+    const handleBotClick = () => {
     resetInactivityTimer();
-    
-    
+
     // Toggle chat open/closed
     if (isOpen) {
-      setIsOpen(false);
-      setBotState('idle');
+      closeChat(); // 👈 use animated close
       return;
     }
-    
+
     setIsOpen(true);
+    setIsClosing(false);
+
 
     if (!hasShownIntro) {
       // Play talking animation and show intro
@@ -102,8 +117,8 @@ export const ChatbotWidget = () => {
   };
 
   const handleClose = () => {
-    setIsOpen(false);
-    setBotState('idle');
+    
+    closeChat();
   };
 
   const handleTyping = (isTyping: boolean) => {
@@ -212,6 +227,7 @@ const botMessage: Message = {
           isThinking={isThinking}
           botName={DEFAULT_CONFIG.botName}
           onTyping={handleTyping}
+          isClosing={isClosing} 
         />
       )}
       

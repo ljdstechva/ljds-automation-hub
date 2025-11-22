@@ -13,6 +13,7 @@ interface ChatPanelProps {
   isThinking: boolean;
   botName: string;
   onTyping: (isTyping: boolean) => void;
+  isClosing: boolean;
 }
 
 export const ChatPanel = ({ 
@@ -21,12 +22,13 @@ export const ChatPanel = ({
   onClose, 
   isThinking, 
   botName,
-  onTyping 
+  onTyping,
+  isClosing 
 }: ChatPanelProps) => {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-   const panelRef = useRef<HTMLDivElement>(null);
+  
 
   useEffect(() => {
   if (messagesEndRef.current) {
@@ -34,19 +36,6 @@ export const ChatPanel = ({
   }
 }, [messages, isThinking]);
 
-  // Click outside to close
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [onClose]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +52,14 @@ export const ChatPanel = ({
   };
 
   return (
-    <div ref={panelRef} className="w-[380px] max-w-[calc(100vw-2rem)] h-[500px] bg-background border border-border rounded-lg shadow-2xl flex flex-col overflow-hidden animate-scale-in">
+  <div
+  className={`w-[380px] max-w-[calc(100vw-2rem)] h-[500px] bg-background border border-border rounded-lg shadow-2xl flex flex-col overflow-hidden ${
+    isClosing ? 'animate-scale-out' : 'animate-scale-in'
+  }`}
+>
+
+    
+
       {/* Header */}
       <div className="bg-primary text-primary-foreground px-4 py-3 flex items-center justify-between">
         <h3 className="font-semibold">{botName}</h3>
