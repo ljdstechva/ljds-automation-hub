@@ -16,10 +16,10 @@ const DEFAULT_WEBHOOK_URL = 'https://n8n.srv1084037.hstgr.cloud/webhook/701eda06
 
 const DEFAULT_CONFIG: ChatbotConfig = {
   webhookUrl: DEFAULT_WEBHOOK_URL,
-  botName: 'LJDS Bot',
+  botName: 'LJDS Tech',
 };
 
-const INTRO_MESSAGE = "Hi, I'm Laurenz' bot. How may I help you today?";
+const INTRO_MESSAGE = "Hi, I'm LJDS Tech bot. How may I help you today?";
 
 
 
