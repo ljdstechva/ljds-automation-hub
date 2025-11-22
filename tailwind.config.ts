@@ -96,6 +96,23 @@ export default {
           "0%": { transform: "rotateY(0deg)" },
           "100%": { transform: "rotateY(180deg)" },
         },
+        "wave": {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(15deg)" },
+          "75%": { transform: "rotate(-15deg)" },
+        },
+        "talk": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.1)" },
+        },
+        "think": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-4px)" },
+        },
+        "idle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-2px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -106,6 +123,10 @@ export default {
         "float": "float 3s ease-in-out infinite",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "flip": "flip 0.6s ease-in-out",
+        "wave": "wave 2s ease-in-out",
+        "talk": "talk 0.3s ease-in-out infinite",
+        "think": "think 1s ease-in-out infinite",
+        "idle": "idle 3s ease-in-out infinite",
       },
     },
   },
