@@ -19,35 +19,46 @@ export const AboutSection = () => {
               <div className="absolute inset-0 bg-primary/30 rounded-full blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative w-48 h-48 sm:w-64 sm:h-64">
-                {/* Animated glowing circle */}
-                <svg className="absolute inset-0 w-full h-full -rotate-90" style={{ filter: 'drop-shadow(0 0 6px hsl(var(--primary)))' }}>
-                  <circle
-                    cx="50%"
-                    cy="50%"
-                    r="48%"
-                    fill="none"
-                    stroke="url(#gradient-about)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeDasharray="8 192"
-                    className="animate-spin"
-                    style={{ animationDuration: '4s' }}
-                  />
-                  <defs>
-                    <linearGradient id="gradient-about" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1" />
-                      <stop offset="50%" stopColor="hsl(16, 100%, 65%)" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                
-                <img
-                  src={laurenzPhoto}
-                  alt="Laurenz Julian"
-                  className="relative w-full h-full object-cover rounded-full shadow-xl ring-4 ring-background"
-                />
-              </div>
+  {/* Wrapper to apply the -90deg static rotation */}
+  <div className="absolute -inset-2 w-[calc(100%+1rem)] h-[calc(100%+1rem)] -rotate-90">
+    {/* SVG gets only the smooth orbit animation */}
+    <svg className="w-full h-full animate-orbit">
+      <defs>
+        <linearGradient id="gradient-about-segment" x1="0%" y1="0%" x2="100%" y2="100%">
+          {/* symmetric gradient: 0% and 100% match */}
+          <stop offset="0%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
+          <stop offset="40%" stopColor="hsl(16, 100%, 60%)" stopOpacity="1" />
+          <stop offset="60%" stopColor="hsl(16, 100%, 70%)" stopOpacity="1" />
+          <stop offset="100%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
+        </linearGradient>
+        <filter id="glow-about">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <circle
+        cx="50%"
+        cy="50%"
+        r="48%"
+        fill="none"
+        stroke="url(#gradient-about-segment)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        filter="url(#glow-about)"
+      />
+    </svg>
+  </div>
+
+  <img
+    src={laurenzPhoto}
+    alt="Laurenz Julian"
+    className="relative w-full h-full object-cover rounded-full shadow-xl ring-4 ring-background"
+  />
+</div>
             </div>
           </div>
 

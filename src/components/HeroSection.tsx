@@ -76,7 +76,7 @@ export const HeroSection = () => {
           </div>
 
           {/* Portrait */}
-          <div className="relative flex items-center justify-center lg:justify-end animate-scale-in">
+          <div className="relative hidden lg:flex items-center justify-center lg:justify-end animate-scale-in">
             <div className="relative group">
               {/* Glowing background effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-full blur-3xl scale-110 animate-glow-pulse" />
@@ -90,37 +90,52 @@ export const HeroSection = () => {
               
               {/* Portrait image */}
               {/* Portrait image with animated circle border */}
-              <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem]">
-                {/* Animated glowing circle */}
-                <svg className="absolute inset-0 w-full h-full -rotate-90" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--primary)))' }}>
-                  <circle
-                    cx="50%"
-                    cy="50%"
-                    r="49%"
-                    fill="none"
-                    stroke="url(#gradient)"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeDasharray="10 290"
-                    className="animate-spin"
-                    style={{ animationDuration: '4s' }}
-                  />
-                  <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1" />
-                      <stop offset="50%" stopColor="hsl(16, 100%, 65%)" stopOpacity="0.8" />
-                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-full" />
-                <img
-                  src={laurenzPhoto}
-                  alt="Laurenz Julian"
-                  className="relative w-full h-full object-cover rounded-full shadow-2xl ring-4 ring-background"
-                />
-              </div>
+<div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem]">
+
+{/* Wrapper to apply the -90deg static rotation */}
+  <div className="absolute -inset-2 w-[calc(100%+1rem)] h-[calc(100%+1rem)] -rotate-90">
+    {/* SVG gets only the smooth orbit animation */}
+    <svg className="w-full h-full animate-orbit">
+      <defs>
+        <linearGradient id="gradient-about-segment" x1="0%" y1="0%" x2="50%" y2="50%">
+          {/* symmetric gradient: 0% and 100% match */}
+          <stop offset="0%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
+          <stop offset="40%" stopColor="hsl(16, 100%, 60%)" stopOpacity="1" />
+          <stop offset="60%" stopColor="hsl(16, 100%, 70%)" stopOpacity="1" />
+          <stop offset="100%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
+        </linearGradient>
+        <filter id="glow-about">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <circle
+        cx="50%"
+        cy="50%"
+        r="48%"
+        fill="none"
+        stroke="url(#gradient-about-segment)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        filter="url(#glow-about)"
+      />
+    </svg>
+  </div>
+  
+  {/* --- Portrait Image --- */}
+  <img
+    src={laurenzPhoto}
+    alt="Laurenz Julian"
+    className="relative w-full h-full object-cover rounded-full shadow-2xl ring-4 ring-background"
+  />
+  
+</div>
+
+
             </div>
           </div>
         </div>

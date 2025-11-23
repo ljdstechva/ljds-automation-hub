@@ -161,3 +161,18 @@ All colors MUST be HSL.
 .animate-scale-out {
   animation: scale-out 0.2s ease-in forwards;
 }
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Utility class for the glowing ring */
+.animate-orbit {
+  animation: orbit 10s linear infinite;
+}
+
