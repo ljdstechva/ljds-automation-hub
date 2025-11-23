@@ -1,4 +1,4 @@
-import emojiFace from "@/assets/emoji-face.png";
+import laurenzPhoto from "@/assets/laurenz-away-new.png";
 
 export const AboutSection = () => {
   return (
@@ -13,13 +13,41 @@ export const AboutSection = () => {
         <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-center">
           {/* Avatar */}
           <div className="flex justify-center lg:justify-start animate-scale-in">
-            <div className="relative">
+            <div className="relative group">
               <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl" />
-              <img
-                src={emojiFace}
-                alt="Laurenz Julian"
-                className="relative w-48 h-48 sm:w-64 sm:h-64 object-cover rounded-full shadow-xl ring-4 ring-background"
-              />
+              {/* Hover outer glow */}
+              <div className="absolute inset-0 bg-primary/30 rounded-full blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative w-48 h-48 sm:w-64 sm:h-64">
+                {/* Animated glowing circle */}
+                <svg className="absolute inset-0 w-full h-full -rotate-90" style={{ filter: 'drop-shadow(0 0 6px hsl(var(--primary)))' }}>
+                  <circle
+                    cx="50%"
+                    cy="50%"
+                    r="48%"
+                    fill="none"
+                    stroke="url(#gradient-about)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeDasharray="8 192"
+                    className="animate-spin"
+                    style={{ animationDuration: '4s' }}
+                  />
+                  <defs>
+                    <linearGradient id="gradient-about" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1" />
+                      <stop offset="50%" stopColor="hsl(16, 100%, 65%)" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                
+                <img
+                  src={laurenzPhoto}
+                  alt="Laurenz Julian"
+                  className="relative w-full h-full object-cover rounded-full shadow-xl ring-4 ring-background"
+                />
+              </div>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar } from "lucide-react";
-import emojiFace from "@/assets/emoji-face.png";
+import laurenzPhoto from "@/assets/laurenz-forward-new.png";
 
 
 
@@ -77,19 +77,46 @@ export const HeroSection = () => {
 
           {/* Portrait */}
           <div className="relative flex items-center justify-center lg:justify-end animate-scale-in">
-            <div className="relative">
+            <div className="relative group">
               {/* Glowing background effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 rounded-full blur-3xl scale-110 animate-glow-pulse" />
+
+              {/* Hover outer glow */}
+              <div className="absolute inset-0 bg-primary/30 rounded-full blur-2xl scale-125 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Floating geometric shapes */}
               <div className="absolute -top-8 -right-8 w-32 h-32 border-4 border-primary/20 rounded-lg rotate-12 animate-float" />
               <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-primary/10 rounded-full animate-float" style={{ animationDelay: "1s" }} />
               
               {/* Portrait image */}
+              {/* Portrait image with animated circle border */}
               <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem]">
+                {/* Animated glowing circle */}
+                <svg className="absolute inset-0 w-full h-full -rotate-90" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--primary)))' }}>
+                  <circle
+                    cx="50%"
+                    cy="50%"
+                    r="49%"
+                    fill="none"
+                    stroke="url(#gradient)"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray="10 290"
+                    className="animate-spin"
+                    style={{ animationDuration: '4s' }}
+                  />
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1" />
+                      <stop offset="50%" stopColor="hsl(16, 100%, 65%)" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-full" />
                 <img
-                  src={emojiFace}
+                  src={laurenzPhoto}
                   alt="Laurenz Julian"
                   className="relative w-full h-full object-cover rounded-full shadow-2xl ring-4 ring-background"
                 />
