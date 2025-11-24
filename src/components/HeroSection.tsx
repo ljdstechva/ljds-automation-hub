@@ -128,10 +128,11 @@ export const HeroSection = () => {
   
   {/* --- Portrait Image --- */}
   <img
-    src={laurenzPhoto}
-    alt="Laurenz Julian"
-    className="relative w-full h-full object-cover rounded-full shadow-2xl ring-4 ring-background"
-  />
+  src={laurenzPhoto}
+  alt="Laurenz Julian"
+  className="relative w-full h-full object-cover object-[20%_50%] rounded-full shadow-2xl ring-4 ring-background"
+/>
+
   
 </div>
 
