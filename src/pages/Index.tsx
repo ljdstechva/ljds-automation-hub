@@ -5,6 +5,7 @@ import { SpecialisationSection } from "@/components/SpecialisationSection";
 import { AboutSection } from "@/components/AboutSection";
 import { ToolsSection } from "@/components/ToolsSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
+import { CertificatesSection } from "@/components/CertificatesSection";
 import { ContactSection } from "@/components/ContactSection";
 import { CursorRibbons } from "@/components/CursorRibbons";
 import { ChatbotWidget } from "@/components/Chatbot";
@@ -38,6 +39,7 @@ const Index = () => {
           selectedTag={selectedTag}
           onTagChange={setSelectedTag}
         />
+        <CertificatesSection />
         <ContactSection />
         
       </main>
