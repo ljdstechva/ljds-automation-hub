@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { ExternalLink, Award } from "lucide-react";
 import cert1 from "../assets/cert-1.png"
 import cert2 from "../assets/cert-2.png"
+import cert3 from "../assets/cert-3.png"
 
 // TODO: Replace placeholder certificates with real data (title, provider, links, etc.)
 const certificates = [
@@ -33,7 +34,7 @@ const certificates = [
   provider: "Technical Virtual Assistants PH",
   issuedDate: "November 26, 2025",
   credentialId: "69260ec0949b7b84ee43a835",
-  categories: ["Automation", "No-Code & Low-Code", "Artificial Intelligence"],
+  categories: ["Automation", "No-Code & Low-Code", "Artificial intelligence"],
   skills: [
     "Using the Zapier interface for building automations",
     "Working with Zapier triggers",
@@ -46,9 +47,30 @@ const certificates = [
     "Connecting services via Webhooks by Zapier",
     "Using AI by Zapier inside automations"
   ],
-  imageUrl: cert2, // update to whatever import name you use, e.g. `import cert2 from "@/assets/cert-2.png"`
+  imageUrl: cert2,
   externalUrl: "https://my-certificates.com/certificates/69260ec0949b7b84ee43a835"
+},
+{
+  id: "cert-3",
+  title: "AI Automation with Make.com",
+  provider: "Technical Virtual Assistants PH",
+  issuedDate: "November 26, 2025",
+  credentialId: "692614b65d5b3da8d3c269c0",
+  categories: ["Automation", "No-Code & Low-Code", "Artificial intelligence"],
+  skills: [
+    "Navigating the Make.com interface and scenario builder",
+    "Designing and structuring scenarios for maintainability",
+    "Working with filters to control data flow",
+    "Configuring and using triggers in Make.com",
+    "Connecting and orchestrating multiple apps",
+    "Building actions and handling multi-step automations",
+    "Implementing error handling and retries in scenarios",
+    "Creating and sending HTTP requests from Make.com"
+  ],
+  imageUrl: cert3,
+  externalUrl: "https://my-certificates.com/certificates/692614b65d5b3da8d3c269c0"
 }
+
 
 ];
 
