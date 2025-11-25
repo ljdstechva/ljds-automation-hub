@@ -4,9 +4,11 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ExternalLink, Award } from "lucide-react";
-import cert1 from "../assets/cert-1.png"
-import cert2 from "../assets/cert-2.png"
-import cert3 from "../assets/cert-3.png"
+import cert1 from "../assets/cert-1.png";
+import cert2 from "../assets/cert-2.png";
+import cert3 from "../assets/cert-3.png";
+import cert4 from "../assets/cert-4.png";
+
 
 // TODO: Replace placeholder certificates with real data (title, provider, links, etc.)
 const certificates = [
@@ -69,7 +71,26 @@ const certificates = [
   ],
   imageUrl: cert3,
   externalUrl: "https://my-certificates.com/certificates/692614b65d5b3da8d3c269c0"
+},
+{
+  id: "cert-4",
+  title: "Prompt Engineering Full Training",
+  provider: "Technical Virtual Assistants PH",
+  issuedDate: "November 26, 2025",
+  credentialId: "69261bee5d5b3da8d3c26ba5",
+  categories: ["Artificial intelligence", "Prompt Engineering"],
+  skills: [
+    "Prompt engineering fundamentals",
+    "Anatomy of a good prompt",
+    "Practical prompt techniques",
+    "Prompt engineering for real-world scenarios",
+    "Using tools, templates, and prompt libraries",
+    "Designing and building prompt workflows"
+  ],
+  imageUrl: cert4,
+  externalUrl: "https://my-certificates.com/certificates/69261bee5d5b3da8d3c26ba5"
 }
+
 
 
 ];
