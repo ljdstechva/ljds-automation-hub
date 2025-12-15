@@ -6,6 +6,31 @@ import { Button } from "@/components/ui/button";
 
 const projects = [
   {
+  title: "GoHighLevel Lead Intake + Zoom Meeting Summary Automation",
+  description:
+    "A GoHighLevel automation that captures leads, manages appointments, and automatically turns Zoom meeting recordings into AI-generated summaries—sent directly to customers and stored in the CRM for sales follow-up.",
+  timeSaved: "3–5 hours per week per salesperson",
+  costSaved: "Reduce manual admin, meeting notes, and follow-up effort—close more deals with the same team",
+  tags: ["GoHighLevel", "OpenAI", "Zoom"],
+  videoUrl: "https://drive.google.com/open?id=1JQCfQjg2jgJQsrux2R-KWMBLZ-vAST4n&usp=drive_fs",
+  previewImage: "https://i.imgur.com/WMQXOTW.png",
+  detailedDescription: [
+    "Captures new leads from GoHighLevel forms and Contact Us pages, ensuring every enquiry is logged and tracked automatically.",
+    "Creates or updates contacts inside GoHighLevel and pushes them into the correct sales pipeline stage.",
+    "Triggers appointment booking workflows and links scheduled calls directly to the contact record.",
+    "Uses a custom Zoom webhook to detect completed meetings and retrieve the meeting recording and transcript automatically.",
+    "Sends the Zoom transcript to OpenAI to generate a clean, structured, and easy-to-read meeting summary.",
+    "Extracts key discussion points, action items, and next steps from the meeting using AI.",
+    "Automatically emails the AI-generated meeting summary to the customer for clarity, trust, and professionalism.",
+    "Logs the meeting summary back into GoHighLevel as notes or custom fields for internal sales reference.",
+    "Eliminates manual note-taking and post-call admin work for sales and support teams.",
+    "Improves customer experience by providing instant, professional follow-ups after every call.",
+    "Ensures no leads, conversations, or commitments are lost between meetings and follow-ups.",
+    "Designed to scale—supports multiple pipelines, forms, calendars, and Zoom accounts with minimal configuration."
+  ]
+},
+
+  {
     title: "Content Repurposing: Audio & Video to Blog Post",
     description:
       "Automation that takes long-form audio or video, transcribes it, summarizes it, and turns it into a structured blog post or article.",
@@ -123,7 +148,7 @@ const projects = [
 
 ];
 
-const filterTags = ["All", "n8n", "OpenAI", "Google Drive", "Gmail", "Telegram", "Google Docs", "Facebook", "Web", "API", "Webhook"];
+const filterTags = ["All", "n8n", "OpenAI", "Google Drive", "Gmail", "Telegram", "Google Docs", "Facebook", "Web", "API", "Webhook", "GoHighLevel", "Zoom"];
 
 interface ProjectsSectionProps {
   selectedTag: string;
