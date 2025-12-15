@@ -50,7 +50,7 @@ const Index = () => {
       <footer className="py-8 px-4 text-center text-sm text-muted-foreground border-t border-border">
         <p>© 2024 LJDS Tech. All rights reserved.</p>
       </footer>
-      <ChatbotWidget />
+      {/* <ChatbotWidget /> */}
     </div>
   );
 };

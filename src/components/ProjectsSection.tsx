@@ -6,6 +6,42 @@ import { Button } from "@/components/ui/button";
 
 const projects = [
   {
+  title: "AI Chat Widget SaaS for Website Lead Generation",
+  description:
+    "A customizable AI-powered chat widget SaaS that businesses can embed on their websites to capture leads, answer customer questions, and track conversations—turning website visitors into qualified enquiries with full analytics and history.",
+  timeSaved: "5–10 hours per week by automating first-touch customer conversations",
+  costSaved: "Reduce manual support and missed leads—convert more visitors without increasing headcount",
+  tags: [
+    "AI SaaS",
+    "Chat Widget",
+    "Lead Generation",
+    "RAG",
+    "Supabase",
+    "OpenAI",
+    "Vector Embeddings"
+  ],
+  videoUrl:
+    "https://drive.google.com/open?id=1hBCfqZMo09p8XyfKhznr4RtRr1iLOJiW&usp=drive_fs",
+  previewImage: "https://i.imgur.com/RjjIgrP.png",
+  detailedDescription: [
+    "Provides an embeddable AI chat widget that can be added to business websites or personal portfolios to engage visitors in real time.",
+    "Captures visitor conversations and messages automatically and stores them in a centralized dashboard for review and analytics.",
+    "Maintains conversation history per visitor, allowing businesses to see previous messages and follow up with full context.",
+    "Tracks user sessions, conversation counts, and engagement data to help businesses understand visitor behaviour and lead quality.",
+    "Allows full visual customization of the chat widget, including brand colours and widget shape (rounded rectangle or circle).",
+    "Stores all widget configuration settings inside a Supabase database for dynamic updates without redeploying the widget.",
+    "Supports AI-powered responses using a custom knowledge base defined by the business.",
+    "Implements Retrieval-Augmented Generation (RAG) to ensure AI responses are grounded in company-specific information.",
+    "Stores knowledge base content as vector embeddings in Supabase for fast and relevant semantic search.",
+    "Uses OpenAI to generate accurate, context-aware responses based on the visitor’s question and the company’s data.",
+    "Associates conversations, messages, and user identifiers securely within Supabase for structured data management.",
+    "Enables businesses to provide instant answers to FAQs, services, and pricing while capturing lead intent.",
+    "Reduces bounce rates by engaging visitors who might otherwise leave without making contact.",
+    "Designed as a scalable SaaS architecture that can support multiple businesses, widgets, and branding profiles."
+  ]
+}
+,
+  {
   title: "GoHighLevel Lead Intake + Zoom Meeting Summary Automation",
   description:
     "A GoHighLevel automation that captures leads, manages appointments, and automatically turns Zoom meeting recordings into AI-generated summaries—sent directly to customers and stored in the CRM for sales follow-up.",
