@@ -1,7 +1,63 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Calendar, Mail } from "lucide-react";
+import { Calendar, Mail, X } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 export const ContactSection = () => {
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [isHighlightingClose, setIsHighlightingClose] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Reset state when modal opens/closes
+  useEffect(() => {
+    if (!isModalOpen) {
+      setHasInteracted(false);
+      setIsHighlightingClose(false);
+    }
+  }, [isModalOpen]);
+
+  // Track interactions
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    // 1. Track clicks inside iframe via window blur
+    const handleBlur = () => {
+      // If focus moves to the iframe, user clicked inside it
+      if (document.activeElement && document.activeElement.tagName === 'IFRAME') {
+        setHasInteracted(true);
+      }
+    };
+
+    // 2. Track Calendly messages (extra safety)
+    const handleMessage = (e: MessageEvent) => {
+      let dataString = "";
+      try {
+        dataString = typeof e.data === 'string' ? e.data : JSON.stringify(e.data);
+      } catch (err) {
+        // Ignore parsing errors for non-serializable messages
+      }
+
+      if (dataString && dataString.includes('date_and_time_selected')) {
+        setHasInteracted(true);
+      }
+    };
+
+    window.addEventListener('blur', handleBlur);
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [isModalOpen]);
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="container mx-auto max-w-4xl">
@@ -20,7 +76,7 @@ export const ContactSection = () => {
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
               <Calendar className="h-8 w-8 text-primary" />
             </div>
-            
+
             <div className="space-y-2">
               <h3 className="text-2xl font-bold">Schedule Your Consultation</h3>
               <p className="text-muted-foreground">
@@ -28,14 +84,50 @@ export const ContactSection = () => {
               </p>
             </div>
 
-            <Button
-              size="lg"
-              className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all group"
-              onClick={() => window.open("https://calendly.com/ljdstechva/30min", "_blank")}
-            >
-              <Calendar className="mr-2 h-5 w-5" />
-              Book a 30-Minute Call
-            </Button>
+            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all group"
+                >
+                  <Calendar className="mr-2 h-5 w-5" />
+                  Book a 30-Minute Call
+                </Button>
+              </DialogTrigger>
+              <DialogContent
+                className="sm:max-w-3xl w-[95vw] h-[80vh] flex flex-col p-0 gap-0 overflow-hidden bg-background [&>button:last-child]:hidden"
+                onPointerDownOutside={(e) => {
+                  if (hasInteracted) {
+                    e.preventDefault();
+                    setIsHighlightingClose(true);
+                    setTimeout(() => setIsHighlightingClose(false), 800);
+                  }
+                }}
+              >
+                <DialogHeader className="p-4 bg-muted/20 border-b shrink-0 flex flex-row items-center justify-between">
+                  <DialogTitle>Schedule a Call</DialogTitle>
+                  <DialogClose asChild>
+                    <button
+                      className={cn(
+                        "rounded-sm opacity-70 ring-offset-background transition-all duration-300 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",
+                        isHighlightingClose && "opacity-100 bg-destructive text-destructive-foreground ring-4 ring-destructive scale-150 shadow-xl z-50",
+                        !isHighlightingClose && "hover:bg-accent hover:text-accent-foreground"
+                      )}
+                    >
+                      <X className="h-6 w-6" />
+                      <span className="sr-only">Close</span>
+                    </button>
+                  </DialogClose>
+                </DialogHeader>
+                <div className="flex-1 w-full h-full relative">
+                  <iframe
+                    src="https://calendly.com/ljdstechva/30min"
+                    className="w-full h-full absolute inset-0 border-0"
+                    title="Schedule a Call"
+                  ></iframe>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
 
           {/* Divider */}

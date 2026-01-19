@@ -35,7 +35,7 @@ export const ChatbotWidget = () => {
   const { toast } = useToast();
   const [isClosing, setIsClosing] = useState(false);
 
-    const closeChat = () => {
+  const closeChat = () => {
     setIsClosing(true);
     setBotState('idle');
 
@@ -49,25 +49,18 @@ export const ChatbotWidget = () => {
 
   // Wave animation every 10 seconds of inactivity
   useEffect(() => {
-    const startInactivityTimer = () => {
-      if (inactivityTimer.current) {
-        clearTimeout(inactivityTimer.current);
-      }
-      
-      inactivityTimer.current = setTimeout(() => {
-        if (!isOpen && botState === 'idle') {
-          setBotState('waving');
-          setTimeout(() => {
-            setBotState('idle');
-            startInactivityTimer();
-          }, 1000);
-        } else {
-          startInactivityTimer();
-        }
-      }, 2000);
-    };
+    // Only schedule animation if chat is closed and bot is idle
+    if (isOpen || botState !== 'idle') {
+      return;
+    }
 
-    startInactivityTimer();
+    inactivityTimer.current = setTimeout(() => {
+      setBotState('waving');
+      setTimeout(() => {
+        setBotState('idle');
+        // Setting state to idle will trigger this effect again to restart the timer
+      }, 2000);
+    }, 10000); // 10 seconds
 
     return () => {
       if (inactivityTimer.current) {
@@ -83,7 +76,7 @@ export const ChatbotWidget = () => {
     }
   };
 
-    const handleBotClick = () => {
+  const handleBotClick = () => {
     resetInactivityTimer();
 
     // Toggle chat open/closed
@@ -99,14 +92,14 @@ export const ChatbotWidget = () => {
     if (!hasShownIntro) {
       // Play talking animation and show intro
       setBotState('talking');
-      
+
       const introMessage: Message = {
         id: `msg_${Date.now()}`,
         role: 'bot',
         content: INTRO_MESSAGE,
         timestamp: new Date(),
       };
-      
+
       setMessages([introMessage]);
       setHasShownIntro(true);
 
@@ -117,7 +110,7 @@ export const ChatbotWidget = () => {
   };
 
   const handleClose = () => {
-    
+
     closeChat();
   };
 
@@ -131,7 +124,7 @@ export const ChatbotWidget = () => {
 
   const handleSendMessage = async (content: string) => {
     resetInactivityTimer();
-    
+
     // Add user message
     const userMessage: Message = {
       id: `msg_${Date.now()}`,
@@ -139,7 +132,7 @@ export const ChatbotWidget = () => {
       content,
       timestamp: new Date(),
     };
-    
+
     setMessages(prev => [...prev, userMessage]);
     setIsThinking(true);
     setBotState('thinking');
@@ -182,19 +175,31 @@ export const ChatbotWidget = () => {
       // In n8n, add a "Respond to Webhook" node at the end of your workflow
       // and configure it to return this JSON structure.
 
-      const replyText = await response.text();
+      const rawText = await response.text();
+      let replyText = rawText;
 
-const botMessage: Message = {
-  id: `msg_${Date.now()}_bot`,
-  role: 'bot',
-  content: replyText || 'I received your message!',
-  timestamp: new Date(),
-};
+      try {
+        const json = JSON.parse(rawText);
+        // Try common field names for chatbot responses
+        if (json.reply) replyText = json.reply;
+        else if (json.output) replyText = json.output;
+        else if (json.message) replyText = json.message;
+        else if (json.text) replyText = json.text;
+      } catch (e) {
+        // Not JSON, use raw text
+      }
 
-      
+      const botMessage: Message = {
+        id: `msg_${Date.now()}_bot`,
+        role: 'bot',
+        content: replyText || 'I received your message!',
+        timestamp: new Date(),
+      };
+
+
       setMessages(prev => [...prev, botMessage]);
       setIsThinking(false);
-      
+
       // Play talking animation
       setBotState('talking');
       if (talkingTimer.current) {
@@ -208,7 +213,7 @@ const botMessage: Message = {
       console.error('Chatbot error:', error);
       setIsThinking(false);
       setBotState('idle');
-      
+
       toast({
         title: 'Connection Error',
         description: "I'm having trouble connecting right now. Please try again.",
@@ -227,10 +232,10 @@ const botMessage: Message = {
           isThinking={isThinking}
           botName={DEFAULT_CONFIG.botName}
           onTyping={handleTyping}
-          isClosing={isClosing} 
+          isClosing={isClosing}
         />
       )}
-      
+
       <BotAvatar state={botState} onClick={handleBotClick} />
     </div>
   );

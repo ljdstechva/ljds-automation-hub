@@ -8,7 +8,7 @@ import { ProjectsSection } from "@/components/ProjectsSection";
 import { CertificatesSection } from "@/components/CertificatesSection";
 import { ContactSection } from "@/components/ContactSection";
 import { CursorRibbons } from "@/components/CursorRibbons";
-import { ChatbotWidget } from "@/components/Chatbot";
+
 
 const Index = () => {
   const [selectedTag, setSelectedTag] = useState("All");
@@ -34,18 +34,18 @@ const Index = () => {
         <SpecialisationSection />
         <AboutSection />
         <ToolsSection onToolClick={handleToolClick} />
-        <ProjectsSection 
+        <ProjectsSection
           ref={projectsSectionRef}
           selectedTag={selectedTag}
           onTagChange={setSelectedTag}
         />
         <CertificatesSection />
         <ContactSection />
-        
+
       </main>
 
-      
-      
+
+
       {/* Footer */}
       <footer className="py-8 px-4 text-center text-sm text-muted-foreground border-t border-border">
         <p>© 2024 LJDS Tech. All rights reserved.</p>
