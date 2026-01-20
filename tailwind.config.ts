@@ -86,9 +86,21 @@ export default {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" },
+        "breathing-glow": {
+          "0%, 100%": {
+            borderColor: "hsl(var(--accent) / 0.6)",
+            boxShadow: "0 0 15px -2px hsl(var(--accent) / 0.4)",
+            transform: "translateY(0)"
+          },
+          "50%": {
+            borderColor: "hsl(var(--accent) / 1)",
+            boxShadow: "0 0 30px 0px hsl(var(--accent) / 0.7)",
+            transform: "translateY(-6px)"
+          },
+        },
+        "green-glow": {
+          "0%, 100%": { boxShadow: "0 0 4px 1px rgba(34, 197, 94, 0.4)" },
+          "50%": { boxShadow: "0 0 12px 3px rgba(34, 197, 94, 0.8)" },
         },
         "glow-pulse": {
           "0%, 100%": { opacity: "0.5" },
@@ -115,6 +127,9 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-2px)" },
         },
+        "ping-smooth": {
+          "75%, 100%": { transform: "scale(1.5)", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -122,13 +137,15 @@ export default {
         "fade-in": "fade-in 0.6s ease-out",
         "fade-in-up": "fade-in-up 0.8s ease-out",
         "scale-in": "scale-in 0.5s ease-out",
-        "float": "float 3s ease-in-out infinite",
+        "breathing-glow": "breathing-glow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "green-glow": "green-glow 2s ease-in-out infinite",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "flip": "flip 0.6s ease-in-out",
         "wave": "wave 2s ease-in-out",
         "talk": "talk 0.3s ease-in-out infinite",
         "think": "think 1s ease-in-out infinite",
         "idle": "idle 3s ease-in-out infinite",
+        "ping-smooth": "ping-smooth 3s cubic-bezier(0, 0, 0.2, 1) infinite",
       },
     },
   },

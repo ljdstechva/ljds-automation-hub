@@ -2,8 +2,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar } from "lucide-react";
 import laurenzPhoto from "@/assets/laurenz-forward-new.png";
 
-
-
 export const HeroSection = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -31,7 +29,6 @@ export const HeroSection = () => {
           <div className="space-y-8 animate-fade-in-up">
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-
                 Hi, I'm{" "}
                 <span className="text-primary">Laurenz</span>
               </h1>
@@ -83,59 +80,65 @@ export const HeroSection = () => {
 
               {/* Hover outer glow */}
               <div className="absolute inset-0 bg-primary/30 rounded-full blur-2xl scale-125 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Floating geometric shapes */}
-              <div className="absolute -top-8 -right-8 w-32 h-32 border-4 border-primary/20 rounded-lg rotate-12 animate-float" />
-              <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-primary/10 rounded-full animate-float" style={{ animationDelay: "1s" }} />
-              
+
+              <div className="absolute -top-6 -right-6 z-20 transition-transform duration-300">
+                <div className="bg-background/80 backdrop-blur-md border border-accent px-6 py-4 rounded-2xl animate-breathing-glow flex items-center gap-4 will-change-transform">
+                  <div className="relative flex h-4 w-4">
+                    <span className="animate-ping-smooth absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 animate-green-glow"></span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground">Current Status</span>
+                    <span className="text-sm font-bold text-foreground leading-none mt-1">Available for Work</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Portrait image */}
               {/* Portrait image with animated circle border */}
-<div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem]">
+              <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem]">
 
-{/* Wrapper to apply the -90deg static rotation */}
-  <div className="absolute -inset-2 w-[calc(100%+1rem)] h-[calc(100%+1rem)] -rotate-90">
-    {/* SVG gets only the smooth orbit animation */}
-    <svg className="w-full h-full animate-orbit">
-      <defs>
-        <linearGradient id="gradient-about-segment" x1="0%" y1="0%" x2="50%" y2="50%">
-          {/* symmetric gradient: 0% and 100% match */}
-          <stop offset="0%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
-          <stop offset="40%" stopColor="hsl(16, 100%, 60%)" stopOpacity="1" />
-          <stop offset="60%" stopColor="hsl(16, 100%, 70%)" stopOpacity="1" />
-          <stop offset="100%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
-        </linearGradient>
-        <filter id="glow-about">
-          <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-          <feMerge>
-            <feMergeNode in="coloredBlur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
+                {/* Wrapper to apply the -90deg static rotation */}
+                <div className="absolute -inset-2 w-[calc(100%+1rem)] h-[calc(100%+1rem)] -rotate-90">
+                  {/* SVG gets only the smooth orbit animation */}
+                  <svg className="w-full h-full animate-orbit">
+                    <defs>
+                      <linearGradient id="gradient-about-segment" x1="0%" y1="0%" x2="50%" y2="50%">
+                        {/* symmetric gradient: 0% and 100% match */}
+                        <stop offset="0%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
+                        <stop offset="40%" stopColor="hsl(16, 100%, 60%)" stopOpacity="1" />
+                        <stop offset="60%" stopColor="hsl(16, 100%, 70%)" stopOpacity="1" />
+                        <stop offset="100%" stopColor="hsl(16, 100%, 60%)" stopOpacity="0.2" />
+                      </linearGradient>
+                      <filter id="glow-about">
+                        <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                        <feMerge>
+                          <feMergeNode in="coloredBlur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
 
-      <circle
-        cx="50%"
-        cy="50%"
-        r="48%"
-        fill="none"
-        stroke="url(#gradient-about-segment)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        filter="url(#glow-about)"
-      />
-    </svg>
-  </div>
-  
-  {/* --- Portrait Image --- */}
-  <img
-  src={laurenzPhoto}
-  alt="Laurenz Julian"
-  className="relative w-full h-full object-cover object-[20%_50%] rounded-full shadow-2xl ring-4 ring-background"
-/>
+                    <circle
+                      cx="50%"
+                      cy="50%"
+                      r="48%"
+                      fill="none"
+                      stroke="url(#gradient-about-segment)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      filter="url(#glow-about)"
+                    />
+                  </svg>
+                </div>
 
-  
-</div>
-
+                {/* --- Portrait Image --- */}
+                <img
+                  src={laurenzPhoto}
+                  alt="Laurenz Julian"
+                  className="relative w-full h-full object-cover object-[20%_50%] rounded-full shadow-2xl ring-4 ring-background"
+                />
+              </div>
 
             </div>
           </div>

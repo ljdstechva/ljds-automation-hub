@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Mail, X } from "lucide-react";
 import {
@@ -15,6 +15,7 @@ export const ContactSection = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isHighlightingClose, setIsHighlightingClose] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reset state when modal opens/closes
   useEffect(() => {
@@ -23,6 +24,13 @@ export const ContactSection = () => {
       setIsHighlightingClose(false);
     }
   }, [isModalOpen]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   // Track interactions
   useEffect(() => {
@@ -100,7 +108,9 @@ export const ContactSection = () => {
                   if (hasInteracted) {
                     e.preventDefault();
                     setIsHighlightingClose(true);
-                    setTimeout(() => setIsHighlightingClose(false), 800);
+                    // Clear any existing timeout
+                    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                    timeoutRef.current = setTimeout(() => setIsHighlightingClose(false), 800);
                   }
                 }}
               >
