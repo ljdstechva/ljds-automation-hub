@@ -3,10 +3,11 @@ import { Check, Terminal, Zap, Database, Cpu } from "lucide-react";
 
 interface LoadingScreenProps {
   onComplete: () => void;
+  progress: number;
 }
 
-const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
-  const [progress, setProgress] = useState(0);
+const LoadingScreen = ({ onComplete, progress }: LoadingScreenProps) => {
+  const [displayProgress, setDisplayProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
 
@@ -18,36 +19,40 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     { text: "System ready.", icon: Check },
   ];
 
+  // Smoothly interpolate displayProgress towards actual progress
   useEffect(() => {
-    // Total duration approx 2.5-3 seconds
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          // Trigger exit animation
-          setIsExiting(true);
-          // Wait for exit animation to finish before unmounting (match duration of glitch-out: 0.5s)
-          setTimeout(onComplete, 500); 
-          return 100;
+    // If progress jumps (e.g. 0 -> 25), we want to animate it smoothly
+    if (displayProgress >= progress) {
+        if (progress >= 100 && !isExiting) {
+             setIsExiting(true);
+             setTimeout(onComplete, 500);
         }
-        // Non-linear progress for a more realistic feel
-        const diff = 100 - prev;
-        const increment = Math.max(1, Math.random() * (diff / 10)); 
-        return Math.min(100, prev + increment);
-      });
-    }, 50);
+        return;
+    }
 
-    return () => clearInterval(progressInterval);
-  }, [onComplete]);
+    const timer = setInterval(() => {
+      setDisplayProgress(prev => {
+        const diff = progress - prev;
+        if (diff <= 0) {
+            clearInterval(timer);
+            return prev;
+        }
+        // Move 10% of the difference or at least 1, to create a "catch up" effect
+        return Math.min(progress, prev + Math.max(1, Math.ceil(diff / 10)));
+      });
+    }, 30); // fast updates for smooth animation
+
+    return () => clearInterval(timer);
+  }, [progress, displayProgress, onComplete, isExiting]);
 
   useEffect(() => {
     // Update steps based on progress
-    if (progress < 30) setCurrentStep(0);
-    else if (progress < 50) setCurrentStep(1);
-    else if (progress < 70) setCurrentStep(2);
-    else if (progress < 90) setCurrentStep(3);
+    if (displayProgress < 30) setCurrentStep(0);
+    else if (displayProgress < 50) setCurrentStep(1);
+    else if (displayProgress < 70) setCurrentStep(2);
+    else if (displayProgress < 90) setCurrentStep(3);
     else setCurrentStep(4);
-  }, [progress]);
+  }, [displayProgress]);
 
   return (
     <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-foreground overflow-hidden transition-all duration-300 ${isExiting ? "animate-glitch-out" : ""}`}>
@@ -90,7 +95,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         <div className="w-full h-1 bg-secondary/30 rounded-full overflow-hidden relative">
           <div 
             className="h-full bg-gradient-to-r from-primary via-accent to-primary transition-all duration-100 ease-out relative"
-            style={{ width: `${progress}%` }}
+            style={{ width: `${displayProgress}%` }}
           >
             {/* Shimmer effect on bar */}
             <div className="absolute inset-0 w-full h-full bg-white/20 animate-[shimmer_1s_infinite] translate-x-[-100%]" />
@@ -99,7 +104,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
 
         {/* Percentage */}
         <div className="mt-2 w-full flex justify-end">
-            <span className="text-xs font-mono text-muted-foreground">{Math.floor(progress)}%</span>
+            <span className="text-xs font-mono text-muted-foreground">{Math.floor(displayProgress)}%</span>
         </div>
       </div>
     </div>

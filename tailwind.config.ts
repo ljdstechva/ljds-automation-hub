@@ -211,7 +211,7 @@ export default {
         "ping-smooth": "ping-smooth 3s cubic-bezier(0, 0, 0.2, 1) infinite",
         "blink": "blink 0.9s step-end infinite",
         "glitch-out": "glitch-out 0.5s ease-in-out forwards",
-        "glitch-in": "glitch-in 0.6s ease-out forwards",
+        "glitch-in": "glitch-in 1.2s ease-out forwards",
       },
     },
   },

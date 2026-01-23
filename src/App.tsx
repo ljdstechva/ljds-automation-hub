@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,17 +14,49 @@ import { AuthProvider } from "@/components/admin/AuthProvider";
 import { EnvCheck } from "@/components/EnvCheck";
 import LoadingScreen from "@/components/LoadingScreen";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { preloadImages } from "@/lib/utils";
+
+// Import assets to preload
+import laurenzForward from "@/assets/laurenz-forward-new.png";
+import laurenzAway from "@/assets/laurenz-away-new.png";
+import logoHorizontal from "@/assets/logo-horizontal.png";
+import logoHorizontalLight from "@/assets/logo-horizontal-light.png";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+
+  useEffect(() => {
+    const loadAssets = async () => {
+      try {
+        await preloadImages([
+          laurenzForward,
+          laurenzAway,
+          logoHorizontal,
+          logoHorizontalLight,
+        ], (progress) => {
+            setLoadingProgress(progress);
+        });
+      } catch (error) {
+        console.error("Failed to load images:", error);
+        // Force progress to 100 to exit loading screen
+        setLoadingProgress(100);
+      }
+    };
+
+    loadAssets();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme" attribute="class">
         {isLoading ? (
-          <LoadingScreen onComplete={() => setIsLoading(false)} />
+          <LoadingScreen 
+            onComplete={() => setIsLoading(false)} 
+            progress={loadingProgress}
+          />
         ) : (
           <EnvCheck>
             <AuthProvider>
