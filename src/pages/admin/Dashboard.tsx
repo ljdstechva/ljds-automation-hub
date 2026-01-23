@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import ProjectsManager from "@/components/admin/ProjectsManager";
 import CredentialsManager from "@/components/admin/CredentialsManager";
+import UploadDiagnostics from "@/components/admin/UploadDiagnostics";
 
 const Dashboard = () => {
     return (
@@ -17,7 +18,7 @@ const Dashboard = () => {
             <Tabs defaultValue="projects" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
                     <TabsTrigger value="projects">My Projects</TabsTrigger>
-                    <TabsTrigger value="credentials">My Credentials</TabsTrigger>
+                    <TabsTrigger value="credentials">My Certificates</TabsTrigger>
                 </TabsList>
                 <TabsContent value="projects" className="mt-6">
                     <Card>
@@ -35,7 +36,7 @@ const Dashboard = () => {
                 <TabsContent value="credentials" className="mt-6">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Credentials</CardTitle>
+                            <CardTitle>Certificates</CardTitle>
                             <CardDescription>
                                 Manage your certificates and awards.
                             </CardDescription>
@@ -46,6 +47,8 @@ const Dashboard = () => {
                     </Card>
                 </TabsContent>
             </Tabs>
+
+            <UploadDiagnostics />
         </div>
     );
 };

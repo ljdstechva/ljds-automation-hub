@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -14,11 +14,15 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { session } = useAuth();
+    const { session, loading: authLoading } = useAuth();
 
-    // If already logged in, redirect to dashboard
-    if (session) {
-        navigate("/admin/dashboard");
+    useEffect(() => {
+        if (session && !authLoading) {
+            navigate("/admin/dashboard");
+        }
+    }, [session, authLoading, navigate]);
+
+    if (session && !authLoading) {
         return null;
     }
 
@@ -26,18 +30,18 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
 
+        const normalizedEmail = email.trim().toLowerCase();
+        const normalizedPassword = password.trim();
+
         const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
+            email: normalizedEmail,
+            password: normalizedPassword,
         });
 
         setLoading(false);
 
         if (error) {
             toast.error("Login failed: " + error.message);
-        } else {
-            toast.success("Logged in successfully");
-            // Navigation handled by the reactive session check at the top
         }
     };
 

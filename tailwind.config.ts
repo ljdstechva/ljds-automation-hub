@@ -130,6 +130,10 @@ export default {
         "ping-smooth": {
           "75%, 100%": { transform: "scale(1.5)", opacity: "0" },
         },
+        "blink": {
+          "0%, 49%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -146,6 +150,7 @@ export default {
         "think": "think 1s ease-in-out infinite",
         "idle": "idle 3s ease-in-out infinite",
         "ping-smooth": "ping-smooth 3s cubic-bezier(0, 0, 0.2, 1) infinite",
+        "blink": "blink 0.9s step-end infinite",
       },
     },
   },

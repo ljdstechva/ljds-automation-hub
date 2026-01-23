@@ -1,8 +1,50 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar } from "lucide-react";
 import laurenzPhoto from "@/assets/laurenz-forward-new.png";
+import { Magnet } from "@/components/Magnet";
+import { BookingDialog } from "@/components/BookingDialog";
+
+const HERO_TITLES = [
+  "AI Automation Specialist",
+  "AI Workflow Specialist",
+  "High-Level Automation Specialist",
+];
 
 export const HeroSection = () => {
+  const [titleIndex, setTitleIndex] = useState(0);
+  const [displayTitle, setDisplayTitle] = useState(HERO_TITLES[0]);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentTitle = HERO_TITLES[titleIndex];
+    let timeout = 0;
+
+    if (!isDeleting) {
+      if (displayTitle === currentTitle) {
+        timeout = window.setTimeout(() => {
+          setIsDeleting(true);
+        }, 3200);
+      } else {
+        timeout = window.setTimeout(() => {
+          setDisplayTitle(currentTitle.slice(0, displayTitle.length + 1));
+        }, 90);
+      }
+    } else {
+      if (displayTitle.length === 0) {
+        timeout = window.setTimeout(() => {
+          setIsDeleting(false);
+          setTitleIndex((prev) => (prev + 1) % HERO_TITLES.length);
+        }, 700);
+      } else {
+        timeout = window.setTimeout(() => {
+          setDisplayTitle(currentTitle.slice(0, displayTitle.length - 1));
+        }, 60);
+      }
+    }
+
+    return () => window.clearTimeout(timeout);
+  }, [displayTitle, isDeleting, titleIndex]);
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -33,7 +75,12 @@ export const HeroSection = () => {
                 <span className="text-primary">Laurenz</span>
               </h1>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl italic leading-tight text-foreground/90">
-                AI Automation Specialist
+                <span className="inline-flex items-baseline gap-2 min-h-[1.6em] min-w-[24ch]">
+                  <span>
+                    {displayTitle}
+                  </span>
+                  <span className="inline-block w-[0.12em] h-[1em] bg-foreground/80 animate-blink" />
+                </span>
               </h2>
             </div>
 
@@ -42,15 +89,20 @@ export const HeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                size="lg"
-                className="text-base sm:text-lg px-6 sm:px-8 py-6 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all group"
-                onClick={() => scrollToSection("contact")}
-              >
-                <Calendar className="mr-2 h-5 w-5" />
-                Book an Automation Call
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <BookingDialog
+                trigger={
+                  <Magnet>
+                    <Button
+                      size="lg"
+                      className="text-base sm:text-lg px-6 sm:px-8 py-6 bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all group"
+                    >
+                      <Calendar className="mr-2 h-5 w-5" />
+                      Book an Automation Call
+                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Magnet>
+                }
+              />
 
               <Button
                 size="lg"
