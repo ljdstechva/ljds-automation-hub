@@ -67,9 +67,9 @@ const Index = () => {
     <div className="min-h-screen bg-background relative">
       {enableCursorEffects && <FluidCursor />}
       {enableCursorEffects && <CanvasCursor />}
+      <Navigation />
 
       <div className="relative z-10 animate-glitch-in">
-        <Navigation />
         <main>
         <HeroSection />
         <SpecialisationSection />
