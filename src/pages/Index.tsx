@@ -68,7 +68,7 @@ const Index = () => {
       {enableCursorEffects && <FluidCursor />}
       {enableCursorEffects && <CanvasCursor />}
 
-      <div className="relative z-10">
+      <div className="relative z-10 animate-glitch-in">
         <Navigation />
         <main>
         <HeroSection />

@@ -134,6 +134,65 @@ export default {
           "0%, 49%": { opacity: "1" },
           "50%, 100%": { opacity: "0" },
         },
+        "glitch-out": {
+          "0%": { 
+            opacity: "1", 
+            transform: "translate(0)",
+            filter: "hue-rotate(0deg)"
+          },
+          "20%": { 
+            transform: "translate(-2px, 2px)",
+            filter: "hue-rotate(90deg)"
+          },
+          "40%": { 
+            transform: "translate(-2px, -2px)",
+            filter: "hue-rotate(180deg)"
+          },
+          "60%": { 
+            opacity: "0.8",
+            transform: "translate(2px, 2px)",
+            filter: "hue-rotate(270deg)"
+          },
+          "80%": { 
+            opacity: "0.4",
+            transform: "translate(2px, -2px)",
+            filter: "hue-rotate(360deg)"
+          },
+          "100%": { 
+            opacity: "0", 
+            transform: "scale(1.1)",
+            filter: "blur(10px)"
+          },
+        },
+        "glitch-in": {
+          "0%": { 
+            opacity: "0", 
+            transform: "scale(0.95) translate(10px, -10px)",
+            filter: "blur(10px) hue-rotate(90deg)"
+          },
+          "20%": { 
+            opacity: "0.4",
+            transform: "translate(-10px, 10px)",
+          },
+          "40%": { 
+            opacity: "0.6", 
+            transform: "translate(5px, -5px)",
+          },
+          "60%": { 
+            opacity: "0.8", 
+            transform: "translate(-5px, 5px)",
+          },
+          "80%": { 
+            opacity: "0.9", 
+            transform: "translate(0)",
+            filter: "hue-rotate(0deg)"
+          },
+          "100%": { 
+            opacity: "1", 
+            transform: "none",
+            filter: "blur(0)"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -151,6 +210,8 @@ export default {
         "idle": "idle 3s ease-in-out infinite",
         "ping-smooth": "ping-smooth 3s cubic-bezier(0, 0, 0.2, 1) infinite",
         "blink": "blink 0.9s step-end infinite",
+        "glitch-out": "glitch-out 0.5s ease-in-out forwards",
+        "glitch-in": "glitch-in 0.6s ease-out forwards",
       },
     },
   },

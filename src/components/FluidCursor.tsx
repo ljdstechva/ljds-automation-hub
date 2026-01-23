@@ -7,8 +7,8 @@ const FluidCursor = () => {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 bg-black/40" style={{ opacity: 0.18 }}>
-      <canvas id="fluid" className="h-screen w-screen" />
+    <div className="pointer-events-none fixed inset-0 z-50 mix-blend-screen" style={{ opacity: 0.18 }}>
+      <canvas id="fluid" className="h-full w-full block" />
     </div>
   );
 };
