@@ -8,7 +8,6 @@ import { ToolsSection } from "@/components/ToolsSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { CertificatesSection } from "@/components/CertificatesSection";
 import { ContactSection } from "@/components/ContactSection";
-import CanvasCursor from "@/components/CanvasCursor";
 import FluidCursor from "@/components/FluidCursor";
 
 
@@ -66,7 +65,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
       {enableCursorEffects && <FluidCursor />}
-      {enableCursorEffects && <CanvasCursor />}
       <Navigation />
 
       <div className="relative z-10 animate-glitch-in">
