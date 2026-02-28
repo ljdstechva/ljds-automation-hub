@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Project, ToolItem } from "@/lib/portfolio-data";
 import {
@@ -13,6 +13,7 @@ import {
 } from "@/components/icons";
 import { Reveal } from "@/components/motion-wrapper";
 import { LogoScrollVelocity } from "@/components/logo-scroll-velocity";
+import { useModalLock } from "@/hooks/use-modal-lock";
 
 type ToolsAndProjectsProps = {
   tools: ToolItem[];
@@ -35,6 +36,7 @@ export function ToolsAndProjects({ tools, projects, filterTags }: ToolsAndProjec
   const [selectedTag, setSelectedTag] = useState("All");
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const projectModalRef = useRef<HTMLElement | null>(null);
 
   const itemsPerPage = 6;
 
@@ -55,26 +57,15 @@ export function ToolsAndProjects({ tools, projects, filterTags }: ToolsAndProjec
 
   const placeholders = Math.max(0, itemsPerPage - currentProjects.length);
 
-  useEffect(() => {
-    if (!selectedProject) {
-      return;
-    }
+  const closeSelectedProject = useCallback(() => {
+    setSelectedProject(null);
+  }, []);
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelectedProject(null);
-      }
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [selectedProject]);
+  useModalLock({
+    isOpen: Boolean(selectedProject),
+    onRequestClose: closeSelectedProject,
+    scrollContainerRef: projectModalRef,
+  });
 
   const applyTagFilter = (tag: string) => {
     setSelectedTag(tag);
@@ -222,22 +213,23 @@ export function ToolsAndProjects({ tools, projects, filterTags }: ToolsAndProjec
 
       <AnimatePresence>
         {selectedProject && (
-          <div className="overlay" role="dialog" aria-modal="true" aria-label={selectedProject.title}>
+          <div className="overlay" role="dialog" aria-modal="true" aria-label={selectedProject.title} data-lenis-prevent>
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="overlay__backdrop" 
-              onClick={() => setSelectedProject(null)} 
+              onClick={closeSelectedProject} 
             />
             <motion.article 
+              ref={projectModalRef}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="overlay__panel"
             >
-              <button type="button" className="icon-button overlay__close" onClick={() => setSelectedProject(null)} aria-label="Close project details">
+              <button type="button" className="icon-button overlay__close" onClick={closeSelectedProject} aria-label="Close project details">
                 <CloseIcon className="icon" />
               </button>
 

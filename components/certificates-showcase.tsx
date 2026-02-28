@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Certificate } from "@/lib/portfolio-data";
 import { AwardIcon, CloseIcon, ExternalLinkIcon } from "@/components/icons";
 import { Reveal, STAGGER_ITEM } from "@/components/motion-wrapper";
+import { useModalLock } from "@/hooks/use-modal-lock";
 
 type CertificatesShowcaseProps = {
   certificates: Certificate[];
@@ -15,6 +16,7 @@ type CertificatesShowcaseProps = {
 export function CertificatesShowcase({ certificates, filters }: CertificatesShowcaseProps) {
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
+  const certificateModalRef = useRef<HTMLElement | null>(null);
 
   const filteredCertificates = useMemo(() => {
     if (activeFilter === "All") {
@@ -24,26 +26,15 @@ export function CertificatesShowcase({ certificates, filters }: CertificatesShow
     return certificates.filter((certificate) => certificate.categories.includes(activeFilter));
   }, [activeFilter, certificates]);
 
-  useEffect(() => {
-    if (!selectedCertificate) {
-      return;
-    }
+  const closeSelectedCertificate = useCallback(() => {
+    setSelectedCertificate(null);
+  }, []);
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelectedCertificate(null);
-      }
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [selectedCertificate]);
+  useModalLock({
+    isOpen: Boolean(selectedCertificate),
+    onRequestClose: closeSelectedCertificate,
+    scrollContainerRef: certificateModalRef,
+  });
 
   return (
     <>
@@ -113,15 +104,16 @@ export function CertificatesShowcase({ certificates, filters }: CertificatesShow
 
       <AnimatePresence>
         {selectedCertificate && (
-          <div className="overlay" role="dialog" aria-modal="true" aria-label={selectedCertificate.title}>
+          <div className="overlay" role="dialog" aria-modal="true" aria-label={selectedCertificate.title} data-lenis-prevent>
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="overlay__backdrop" 
-              onClick={() => setSelectedCertificate(null)} 
+              onClick={closeSelectedCertificate} 
             />
             <motion.article 
+              ref={certificateModalRef}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -131,7 +123,7 @@ export function CertificatesShowcase({ certificates, filters }: CertificatesShow
               <button
                 type="button"
                 className="icon-button overlay__close"
-                onClick={() => setSelectedCertificate(null)}
+                onClick={closeSelectedCertificate}
                 aria-label="Close certificate details"
               >
                 <CloseIcon className="icon" />

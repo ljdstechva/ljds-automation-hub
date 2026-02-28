@@ -1,6 +1,8 @@
 :root {
   --font-display: "Syne", sans-serif;
   --font-body: "Archivo", sans-serif;
+  --site-nav-height: 5.3rem;
+  --overlay-gutter: 1rem;
 
   --bg: #070b12;
   --bg-elev: #0f1421;
@@ -52,6 +54,11 @@ body {
   overflow-x: hidden;
 }
 
+html.is-modal-open,
+body.is-modal-open {
+  overflow: hidden !important;
+}
+
 body {
   font-family: var(--font-body);
   font-size: 16px;
@@ -99,7 +106,6 @@ ul {
 
 .site-main {
   position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
 }
@@ -943,9 +949,14 @@ html[data-theme="dark"] .theme-icon--moon {
   inset: 0;
   z-index: 9999;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1rem;
+  padding-top: calc(var(--site-nav-height) + var(--overlay-gutter) + env(safe-area-inset-top));
+  padding-right: var(--overlay-gutter);
+  padding-bottom: var(--overlay-gutter);
+  padding-left: var(--overlay-gutter);
+  touch-action: none;
+  overscroll-behavior: contain;
 }
 
 .overlay__backdrop {
@@ -959,8 +970,11 @@ html[data-theme="dark"] .theme-icon--moon {
   position: relative;
   z-index: 1;
   width: min(920px, 100%);
-  max-height: min(89vh, 920px);
+  max-height: min(920px, calc(100dvh - var(--site-nav-height) - (var(--overlay-gutter) * 2) - env(safe-area-inset-top)));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   border-radius: var(--radius-xl);
   border: 1px solid var(--line-strong);
   background: var(--bg-elev);
@@ -972,9 +986,17 @@ html[data-theme="dark"] .theme-icon--moon {
 }
 
 .overlay__panel--booking {
-  width: min(980px, 100%);
+  width: min(1080px, 100%);
+  height: min(980px, calc(100dvh - var(--site-nav-height) - (var(--overlay-gutter) * 2) - env(safe-area-inset-top)));
+  max-height: min(980px, calc(100dvh - var(--site-nav-height) - (var(--overlay-gutter) * 2) - env(safe-area-inset-top)));
+  overflow: hidden;
   padding: 0;
   gap: 0;
+}
+
+.overlay__panel--certificate {
+  width: min(1080px, 100%);
+  max-height: min(980px, calc(100dvh - var(--site-nav-height) - (var(--overlay-gutter) * 2) - env(safe-area-inset-top)));
 }
 
 .overlay__header {
@@ -1018,7 +1040,8 @@ html[data-theme="dark"] .theme-icon--moon {
   border: 0;
   border-radius: 0;
   aspect-ratio: auto;
-  min-height: min(72vh, 720px);
+  min-height: 0;
+  flex: 1 1 auto;
 }
 
 .overlay__media iframe {
@@ -1179,11 +1202,18 @@ html[data-theme="dark"] .theme-icon--moon {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   overflow: hidden;
+  min-height: min(70vh, 780px);
+  max-height: min(76vh, 840px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--bg-soft) 82%, transparent);
+  flex-shrink: 0;
 }
 
 .cert-preview {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -1465,6 +1495,17 @@ html[data-theme="dark"] .theme-icon--moon {
   .overlay__panel {
     padding: 1rem;
     border-radius: var(--radius-lg);
+  }
+
+  .overlay__panel--booking {
+    padding: 0;
+    height: min(820px, calc(100dvh - var(--site-nav-height) - (var(--overlay-gutter) * 2) - env(safe-area-inset-top)));
+    max-height: min(820px, calc(100dvh - var(--site-nav-height) - (var(--overlay-gutter) * 2) - env(safe-area-inset-top)));
+  }
+
+  .overlay__certificate-image {
+    min-height: min(52vh, 560px);
+    max-height: min(62vh, 640px);
   }
 }
 

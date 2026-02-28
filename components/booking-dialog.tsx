@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { CloseIcon } from "@/components/icons";
+import { useModalLock } from "@/hooks/use-modal-lock";
 
 type BookingDialogProps = {
   trigger: ReactNode;
@@ -12,18 +13,25 @@ export function BookingDialog({ trigger }: BookingDialogProps) {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [highlightClose, setHighlightClose] = useState(false);
   const timeoutRef = useRef<number | null>(null);
+  const dialogPanelRef = useRef<HTMLElement | null>(null);
 
-  const openDialog = () => {
+  const openDialog = useCallback(() => {
     setHasInteracted(false);
     setHighlightClose(false);
     setOpen(true);
-  };
+  }, []);
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     setOpen(false);
     setHasInteracted(false);
     setHighlightClose(false);
-  };
+  }, []);
+
+  useModalLock({
+    isOpen: open,
+    onRequestClose: closeDialog,
+    scrollContainerRef: dialogPanelRef,
+  });
 
   useEffect(() => {
     return () => {
@@ -37,9 +45,6 @@ export function BookingDialog({ trigger }: BookingDialogProps) {
     if (!open) {
       return;
     }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
 
     const handleBlur = () => {
       if (document.activeElement?.tagName === "IFRAME") {
@@ -60,21 +65,12 @@ export function BookingDialog({ trigger }: BookingDialogProps) {
       }
     };
 
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeDialog();
-      }
-    };
-
     window.addEventListener("blur", handleBlur);
     window.addEventListener("message", handleMessage);
-    window.addEventListener("keydown", handleKeydown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
       window.removeEventListener("blur", handleBlur);
       window.removeEventListener("message", handleMessage);
-      window.removeEventListener("keydown", handleKeydown);
     };
   }, [open]);
 
@@ -112,9 +108,9 @@ export function BookingDialog({ trigger }: BookingDialogProps) {
       </span>
 
       {open && (
-        <div className="overlay" role="dialog" aria-modal="true" aria-label="Schedule a call">
+        <div className="overlay" role="dialog" aria-modal="true" aria-label="Schedule a call" data-lenis-prevent>
           <div className="overlay__backdrop" onClick={handleOutsideClick} />
-          <article className="overlay__panel overlay__panel--booking">
+          <article ref={dialogPanelRef} className="overlay__panel overlay__panel--booking">
             <header className="overlay__header">
               <h3>Schedule a Call</h3>
               <button
