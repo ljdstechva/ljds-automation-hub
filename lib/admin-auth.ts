@@ -6,21 +6,33 @@ import { createClient, type Session } from "@supabase/supabase-js";
 const ADMIN_ACCESS_COOKIE = "ljds_admin_access_token";
 const ADMIN_REFRESH_COOKIE = "ljds_admin_refresh_token";
 
-function requireEnv(name: string, value: string | undefined) {
-  if (!value) {
-    throw new Error(`Missing ${name}.`);
-  }
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
 
-  return value;
-}
-
-const supabaseUrl = requireEnv("NEXT_PUBLIC_SUPABASE_URL", process.env.NEXT_PUBLIC_SUPABASE_URL);
-const supabaseAnonKey = requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+export const isAdminAuthConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 const isProduction = process.env.NODE_ENV === "production";
 
+function getAdminAuthConfig(): { supabaseUrl: string; supabaseAnonKey: string } {
+  const resolvedUrl = supabaseUrl;
+  const resolvedAnonKey = supabaseAnonKey;
+
+  if (!resolvedUrl || !resolvedAnonKey) {
+    throw new Error(
+      "Admin authentication is unavailable. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.",
+    );
+  }
+
+  return {
+    supabaseUrl: resolvedUrl,
+    supabaseAnonKey: resolvedAnonKey,
+  };
+}
+
 function createAuthClient() {
-  return createClient(supabaseUrl, supabaseAnonKey, {
+  const config = getAdminAuthConfig();
+
+  return createClient(config.supabaseUrl, config.supabaseAnonKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
@@ -69,6 +81,10 @@ export type AdminAuthContext = {
 };
 
 export async function getAdminAuthContext(): Promise<AdminAuthContext | null> {
+  if (!isAdminAuthConfigured) {
+    return null;
+  }
+
   const cookieStore = await cookies();
   const accessToken = cookieStore.get(ADMIN_ACCESS_COOKIE)?.value;
 
@@ -114,7 +130,9 @@ export async function requireAdminUserForAction() {
 }
 
 export function createAuthenticatedSupabase(accessToken: string) {
-  return createClient(supabaseUrl, supabaseAnonKey, {
+  const config = getAdminAuthConfig();
+
+  return createClient(config.supabaseUrl, config.supabaseAnonKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,

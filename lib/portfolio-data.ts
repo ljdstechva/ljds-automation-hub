@@ -1,6 +1,6 @@
 import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
-import { supabase } from "./supabase";
+import { isSupabaseConfigured, supabase } from "./supabase";
 
 export type NavigationItem = {
   id: string;
@@ -104,6 +104,10 @@ function withDerivedFilters(data: PortfolioContent): PortfolioData {
 }
 
 async function readFromSupabase(): Promise<PortfolioContent> {
+  if (!isSupabaseConfigured) {
+    return emptyPortfolioContent();
+  }
+
   const [heroRes, specRes, toolRes, projRes, certRes] = await Promise.all([
     supabase.from("ljds_hero_titles").select("title").order("sort_order"),
     supabase.from("ljds_specializations").select("*").order("sort_order"),

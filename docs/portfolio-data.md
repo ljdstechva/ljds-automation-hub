@@ -44,6 +44,14 @@ Required environment variables:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` (minimum)
 
+## Build-Safe Fallback
+
+`lib/supabase.ts` is intentionally build-safe:
+
+- Missing Supabase env vars no longer crash module evaluation during `next build`.
+- `getPortfolioData()` and `getPortfolioDataUncached()` catch Supabase configuration/read errors and return empty portfolio content.
+- For production data rendering, configure `NEXT_PUBLIC_SUPABASE_URL` and either `NEXT_PUBLIC_SUPABASE_ANON_KEY` or `SUPABASE_SERVICE_ROLE_KEY`.
+
 ## Database Privileges
 
 For public portfolio reads under RLS, `anon`/`authenticated` roles must have:

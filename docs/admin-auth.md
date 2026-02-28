@@ -39,3 +39,12 @@ Required DB setup for admin-managed tables:
 - matching RLS policies scoped to `authenticated`
 
 `anon` should retain read-only access for public portfolio rendering.
+
+## Environment Requirements
+
+Admin auth requires:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+If either variable is missing, admin auth routes/actions remain build-safe but login/action execution returns a clear runtime configuration error instead of crashing deployment.

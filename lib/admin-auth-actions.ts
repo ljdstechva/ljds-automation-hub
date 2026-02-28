@@ -20,14 +20,23 @@ export async function loginAdmin(
     return { error: "Email and password are required." };
   }
 
-  const { data, error } = await signInAdminWithPassword(email, password);
+  try {
+    const { data, error } = await signInAdminWithPassword(email, password);
 
-  if (error || !data.session) {
-    return { error: "Invalid email or password." };
+    if (error || !data.session) {
+      return { error: "Invalid email or password." };
+    }
+
+    await setAdminSessionCookies(data.session);
+    redirect(nextPath);
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error
+          ? error.message
+          : "Admin login is currently unavailable. Please verify Supabase environment configuration.",
+    };
   }
-
-  await setAdminSessionCookies(data.session);
-  redirect(nextPath);
 }
 
 export async function logoutAdmin() {
